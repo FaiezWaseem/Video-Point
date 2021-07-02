@@ -1,5 +1,5 @@
 //-----------!important variables -----------------//
-var key, islogin = false, fuserid , myliked=false;
+var key, islogin = false, fuserid , myliked=false ,Username , Profile;
 key = localStorage.getItem('key');
 const auth = firebase.auth();
 // --------------Checking Login Info--------------//
@@ -16,7 +16,8 @@ auth.onAuthStateChanged(function(user){
          firebase.database().ref("users/"+userid).once('value').then(function (snapshot) {
          
          get('#comment_profile').src = snapshot.val().profile;
-
+         Username = snapshot.val().name;
+         Profile = snapshot.val().profile;
       
         })
   }else{
@@ -361,4 +362,19 @@ function firebaseGetData(val){
 
 DomEvent('#click_Comment','click',function(){
   get('.comment_box').classList.toggle("block");
+})
+DomEvent('#comment_send','click',function(){
+  if(islogin){
+    var t = getTimeinMilli();
+    var newPostKey = firebase.database().ref().child('commentDB').push().key;
+firebase.database().ref('commentDB/'+newPostKey).set({
+   'msg': getvalue('#comment'),
+     'key':newPostKey,
+     'uid': fuserid,
+     'time':t,
+     'profile':Profile,
+     'name':Username
+
+})
+  }else{a("You need to Login Before Commenting")}
 })
