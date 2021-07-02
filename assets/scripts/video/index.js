@@ -382,9 +382,9 @@ get('#comment').value = "";
 
 function loadComment(){
   firebase.database().ref('commentDB/'+key).on('child_added',function(snapshot){
-    var ul = get('.comment_box');
+    var item = get('.comment_box');
     c("comment load Running"+key);
-  ul += ` <div class="video_recieved_comment">
+  item.innerHTML += ` <div class="video_recieved_comment">
   <div class="comment_logo">
     <img src="${snapshot.val().profile}" alt="not found" width="40px" height="40px" >
   </div>
