@@ -404,3 +404,29 @@ function loadComment(post){
   })
 }
 loadComment(key);
+
+
+
+DomEvent('#report','click',function () {
+  var r = prompt("Please Enter a Reason of Report");
+
+if (r != null) {
+  firebase.database().ref('reports').push().set({
+    "id":key,
+    'reason':r
+  })
+
+  a("Reported")
+}
+})
+DomEvent('#watchLater','click',function () {
+  if(islogin){
+    var newPostKey = firebase.database().ref().child('video').push().key;
+    firebase.database().ref('watchLater/'+fuserid+"/"+newPostKey).set({
+      "key":newPostKey,
+      'vid_key':key
+    })
+
+    a("added")
+  }else{a("You need To Login First")}
+})
