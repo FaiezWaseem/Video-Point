@@ -203,9 +203,13 @@ h1 {
   .sidebar {
     display: none;
   }
+
 }
 
 @media (max-width: 768px) {
+  h1{
+   margin-bottom: 0px; 
+  }
   .videos__container {
     justify-content: center;
   }

@@ -265,6 +265,10 @@ hr {
   border-radius: 50%;
   margin-left: 5px;
   }
+  .comment_logo{
+    display: flex;
+    justify-content: flex-start;
+  }
   .vid__comment .write__comment{
     display: flex;
     align-items: center;

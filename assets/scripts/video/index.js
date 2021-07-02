@@ -254,6 +254,7 @@ firebase.database().ref('video').limitToLast(7).on('child_added',function(snapsh
 function clickvid(key){
   id = key.getAttribute('data-id')
   firebaseGetData(id);
+  loadComment(id);
 }
 
 DomEvent('#font_like', 'click', function(){
@@ -380,9 +381,10 @@ get('#comment').value = "";
   }else{a("You need to Login Before Commenting")}
 })
 
-function loadComment(){
-  firebase.database().ref('commentDB/'+key).on('child_added',function(snapshot){
-    var item = get('.comment_box');
+function loadComment(post){
+  var item = get('.comment_box');
+  item.innerHTML += "";
+  firebase.database().ref('commentDB/'+post).on('child_added',function(snapshot){
     c("comment load Running"+key);
   item.innerHTML += ` <div class="video_recieved_comment">
   <div class="comment_logo">
@@ -401,4 +403,4 @@ function loadComment(){
   
   })
 }
-loadComment();
+loadComment(key);
