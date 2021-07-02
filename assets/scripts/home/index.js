@@ -21,7 +21,7 @@ menu.addEventListener('click', function () {
 
 DomEvent('#upload', "click", function(){
   if(islogin){
-  window.location.href = '/assets/Video_Upload.html'}
+  window.location.href = '/Video-Point/assets/Video_Upload.html'}
   else{
     a("You need to Login To Upload a video");
   }
@@ -29,9 +29,9 @@ DomEvent('#upload', "click", function(){
 DomEvent('#account','click',function()
 {
   if(islogin){
-    window.location.href = '/UserPanel/userpanel.html';
+    window.location.href = '/Video-Point//UserPanel/userpanel.html';
   }else{
-    window.location.href = '/Account/signup.html';
+    window.location.href = '/Video-Point/Account/signup.html';
   }
 })
 
@@ -151,7 +151,7 @@ function videoClicked(vid){
   var id = vid.getAttribute("data-id");
   //  c(id);
   // localStorage.setItem('key',id);
-  window.location.href = '/video view/video.html?page='+id;
+  window.location.href = '/Video-Point/video%20view/video.html?page='+id;
 }
 var element = get('.videos')
 var _x = 0
