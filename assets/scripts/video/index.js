@@ -313,7 +313,7 @@ function CheckUnLiked(){
 
 var element = get('.container')
 var _x = 0
-setInterval(function(){
+DomEvent('.container','scroll',function(){
   if (element.scrollHeight - element.scrollTop === element.clientHeight)
       {
         if(_x < 1){
@@ -334,7 +334,7 @@ setInterval(function(){
 
       }
 
-},1000)
+})
 
 
 function firebaseGetData(val){
