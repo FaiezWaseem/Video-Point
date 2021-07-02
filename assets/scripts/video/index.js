@@ -367,7 +367,7 @@ DomEvent('#comment_send','click',function(){
   if(islogin){
     var t = getTimeinMilli();
     var newPostKey = firebase.database().ref().child('commentDB').push().key;
-firebase.database().ref('commentDB/'+newPostKey).set({
+firebase.database().ref('commentDB/'+key+"/"+newPostKey).set({
    'msg': getvalue('#comment'),
      'key':newPostKey,
      'uid': fuserid,
@@ -376,5 +376,29 @@ firebase.database().ref('commentDB/'+newPostKey).set({
      'name':Username
 
 })
+get('#comment').value = "";
   }else{a("You need to Login Before Commenting")}
 })
+
+function loadComment(){
+  firebase.database().ref('commentDB/'+key).on('child_added',function(snapshot){
+    var ul = get('.comment_box');
+    c("comment load Running"+key);
+  ul += ` <div class="video_recieved_comment">
+  <div class="comment_logo">
+    <img src="${snapshot.val().profile}" alt="not found" width="40px" height="40px" >
+  </div>
+  <div class="comment_details">
+    <div class="commenter">
+      <h5>${snapshot.val().name} </h5>
+      <p>${convertTime(snapshot.val().time)}</p>
+    </div>
+    <div class="message">
+      <p>${snapshot.val().msg}</p>
+    </div>
+  </div>
+ </div>`
+  
+  })
+}
+loadComment();
