@@ -144,37 +144,34 @@ function videoClicked(vid){
 }
 var element = get('.videos')
 var _x = 0
-var s = setInterval(function(){
+DomEvent('.videos','scroll',function(){
   if (element.scrollHeight - element.scrollTop === element.clientHeight)
-      {
-        c("reached end");
-        var ul = get('.videos__container');
-        if(_x < 1){
-          firebase.database().ref('video').limitToLast(10).on('child_added',function(snapshot){
-            ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
-          <div class="video__thumbnail" data-id="${snapshot.key}">
-          <video src="${snapshot.val().video}" class="video__thumbnail">
-          </div>
-          <div class="video__details">
-            <div class="author">
-              <img
-                src="${snapshot.val().profile}"
-                alt=""
-              />
-            </div>
-            <div class="title">
-              <h3>${snapshot.val().title}</h3>
-              <a href="">${snapshot.val().username}</a>
-              <span>${snapshot.val().view}view • ${convertTime(snapshot.val().time)}</span>
-            </div>
-          </div>
-        </div>`
-          
-          });
-          _x++;
-		clearInterval(s);
-        }
-
-      }
-
-},10000)
+  {
+    c("reached end");
+    var ul = get('.videos__container');
+    if(_x < 1){
+      firebase.database().ref('video').limitToLast(10).on('child_added',function(snapshot){
+        ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
+      <div class="video__thumbnail" data-id="${snapshot.key}">
+      <video src="${snapshot.val().video}" class="video__thumbnail">
+      </div>
+      <div class="video__details">
+        <div class="author">
+          <img
+            src="${snapshot.val().profile}"
+            alt=""
+          />
+        </div>
+        <div class="title">
+          <h3>${snapshot.val().title}</h3>
+          <a href="">${snapshot.val().username}</a>
+          <span>${snapshot.val().view}view • ${convertTime(snapshot.val().time)}</span>
+        </div>
+      </div>
+    </div>`
+      
+      });
+      _x++;
+    }
+  }
+})

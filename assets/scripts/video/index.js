@@ -313,11 +313,7 @@ function CheckUnLiked(){
 
 var element = get('.container')
 var _x = 0
-<<<<<<< HEAD
 DomEvent('.container','scroll',function(){
-=======
-var s = setInterval(function(){
->>>>>>> 592e13ac66070937c7b2b76fc49789a557f4cc7e
   if (element.scrollHeight - element.scrollTop === element.clientHeight)
       {
         if(_x < 1){
@@ -334,7 +330,6 @@ var s = setInterval(function(){
           </div>`
           })
           _x++;
-		clearInterval(s);
         }
 
       }
