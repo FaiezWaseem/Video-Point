@@ -316,6 +316,7 @@ var _x = 0
 DomEvent('.container','scroll',function(){
   if (element.scrollHeight - element.scrollTop === element.clientHeight)
       {
+        c('reached bottom of div')
         if(_x < 1){
           firebase.database().ref('video').limitToFirst(7).on('child_added',function(snapshot){
             let ul = get('.item2');
