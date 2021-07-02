@@ -2,26 +2,15 @@
 var islogin = false;
 const auth = firebase.auth();
 
-
-
-
-
-
-
-
 const menu = document.querySelector('#menu');
 const sidebar = document.querySelector('.sidebar');
 menu.addEventListener('click', function () {
   sidebar.classList.toggle('show-sidebar');
 });
 
-
-
-
-
 DomEvent('#upload', "click", function(){
   if(islogin){
-  window.location.href = '/assets/Video_Upload.html'}
+  window.location.href = '/Video-Point/assets/Video_Upload.html'}
   else{
     a("You need to Login To Upload a video");
   }
@@ -29,9 +18,9 @@ DomEvent('#upload', "click", function(){
 DomEvent('#account','click',function()
 {
   if(islogin){
-    window.location.href = '/UserPanel/userpanel.html';
+    window.location.href = '/Video-Point/UserPanel/userpanel.html';
   }else{
-    window.location.href = '/Account/signup.html';
+    window.location.href = '/Video-Point/Account/signup.html';
   }
 })
 
@@ -151,41 +140,41 @@ function videoClicked(vid){
   var id = vid.getAttribute("data-id");
   //  c(id);
   // localStorage.setItem('key',id);
-  window.location.href = '/video view/video.html?page='+id;
+  window.location.href = '/Video-Point/video view/video.html?page='+id;
 }
-
 var element = get('.videos')
 var _x = 0
-DomEvent('.videos','scroll',function(){
+var s = setInterval(function(){
   if (element.scrollHeight - element.scrollTop === element.clientHeight)
-  {
-    c("reached end");
-    var ul = get('.videos__container');
-    if(_x < 1){
-      firebase.database().ref('video').limitToLast(10).on('child_added',function(snapshot){
-        ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
-      <div class="video__thumbnail" data-id="${snapshot.key}">
-      <video src="${snapshot.val().video}" class="video__thumbnail">
-      </div>
-      <div class="video__details">
-        <div class="author">
-          <img
-            src="${snapshot.val().profile}"
-            alt=""
-          />
-        </div>
-        <div class="title">
-          <h3>${snapshot.val().title}</h3>
-          <a href="">${snapshot.val().username}</a>
-          <span>${snapshot.val().view}view • ${convertTime(snapshot.val().time)}</span>
-        </div>
-      </div>
-    </div>`
-      
-      });
-      _x++;
-    }
-  }
-})
+      {
+        c("reached end");
+        var ul = get('.videos__container');
+        if(_x < 1){
+          firebase.database().ref('video').limitToLast(10).on('child_added',function(snapshot){
+            ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
+          <div class="video__thumbnail" data-id="${snapshot.key}">
+          <video src="${snapshot.val().video}" class="video__thumbnail">
+          </div>
+          <div class="video__details">
+            <div class="author">
+              <img
+                src="${snapshot.val().profile}"
+                alt=""
+              />
+            </div>
+            <div class="title">
+              <h3>${snapshot.val().title}</h3>
+              <a href="">${snapshot.val().username}</a>
+              <span>${snapshot.val().view}view • ${convertTime(snapshot.val().time)}</span>
+            </div>
+          </div>
+        </div>`
+          
+          });
+          _x++;
+		clearInterval(s);
+        }
 
+      }
 
+},10000)
