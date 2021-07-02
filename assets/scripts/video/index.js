@@ -336,8 +336,6 @@ DomEvent('.container','scroll',function(){
       }
 
 })
-
-
 function firebaseGetData(val){
   firebase.database().ref("video/"+val).once('value').then(function (snapshot) {
     var url = snapshot.val().video;
@@ -354,3 +352,7 @@ function firebaseGetData(val){
   likedList(snapshot.val().key)
   });
 }
+
+DomEvent('#click_Comment','click',function(){
+  get('.comment_box').classList.toggle("block");
+})
