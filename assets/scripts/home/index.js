@@ -155,7 +155,7 @@ function videoClicked(vid){
 }
 var element = get('.videos')
 var _x = 0
-setInterval(function(){
+var s = setInterval(function(){
   if (element.scrollHeight - element.scrollTop === element.clientHeight)
       {
         c("reached end");
@@ -183,8 +183,9 @@ setInterval(function(){
           
           });
           _x++;
+          clearInterval(s);
         }
 
       }
 
-},50000)
+},10000)
