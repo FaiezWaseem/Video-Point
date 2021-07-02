@@ -1,0 +1,117 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Material Icons -->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- CSS File -->
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <title>Video Point</title>
+  </head>
+  <body>
+    <!-- Header Starts -->
+    <div class="header">
+      <div class="header__left">
+        <i id="menu" class="material-icons">menu</i>
+        <h1>videoPoint</h1>
+      </div>
+
+      <div class="header__search">
+        <form action="">
+          <input type="text" placeholder="Search" />
+          <button><i class="material-icons">search</i></button>
+        </form>
+      </div>
+
+      <div class="header__icons">
+        <i class="material-icons display-this">search</i>
+        <i class="material-icons" id="upload" >videocam</i>
+        <i class="material-icons">apps</i>
+        <i class="material-icons">notifications</i>
+        <i class="material-icons display-this" id="account">account_circle</i>
+      </div>
+    </div>
+    <!-- Header Ends -->
+
+    <!-- Main Body Starts -->
+    <div class="mainBody">
+      <!-- Sidebar Starts -->
+
+      <div class="sidebar">
+        <div class="sidebar__categories">
+          <div class="sidebar__category">
+            <i class="material-icons">home</i>
+            <span>Home</span>
+          </div>
+          <div class="sidebar__category">
+            <i class="material-icons">local_fire_department</i>
+            <span>Trending</span>
+          </div>
+          <div class="sidebar__category">
+            <i class="material-icons">subscriptions</i>
+            <span>Subcriptions</span>
+          </div>
+        </div>
+        <hr />
+        <div class="sidebar__categories">
+          <div class="sidebar__category">
+            <i class="material-icons">library_add_check</i>
+            <span>Library</span>
+          </div>
+          <div class="sidebar__category">
+            <i class="material-icons">history</i>
+            <span>History</span>
+          </div>
+          <div class="sidebar__category">
+            <i class="material-icons">play_arrow</i>
+            <span>Your Videos</span>
+          </div>
+          <div class="sidebar__category">
+            <i class="material-icons">watch_later</i>
+            <span>Watch Later</span>
+          </div>
+          <div class="sidebar__category">
+            <i class="material-icons">thumb_up</i>
+            <span>Liked Videos</span>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <!-- Sidebar Ends -->
+
+      <!-- Videos Section -->
+      <div class="videos">
+        <h1>Recommended</h1>
+        <div class="videos__container">
+
+        </div>
+        <h1>New</h1>
+        <div class="videos__container" id="Latest">
+
+        </div>
+        <h1>Comedy</h1>
+        <div class="videos__container" id="comedy">
+
+        </div>
+        <h1>love</h1>
+        <div class="videos__container" id="love">
+
+        </div>
+      </div>
+    </div>
+
+<!-- Scripts -->
+   <!-- Firebase library -->
+   <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-database.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script> 
+  <script src="./assets/config.js"></script>
+   <script src="./assets/lib/index.js"></script>
+    <script src="./assets/scripts/home/index.js"></script>
+    <!-- Main Body Ends -->
+  </body>
+</html>

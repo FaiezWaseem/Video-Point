@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/upload.css">
+</head>
+<body>
+      <div class="container">
+        <div class="video-thumb">
+          <video  id="video"  autoplay controls loop   width="500px" height="250px">
+          </video>
+          <!-- <canvas id="canvas-element"></canvas> -->
+        </div>
+        <div class="type box-shadow " >
+          <input type="text"  id="title" placeholder="Enter Video Title" required>
+          <input type="text"  id="des" placeholder="Enter Video Description" required>
+          <label for="type">Choose Video type :</label>
+              <select id="type" name="cars">
+                <option value="comedy">Comedy</option>
+                <option value="news">News</option>
+                <option value="action">Action</option>
+                <option value="sad">Sad</option>
+                <option value="music">Music</option>
+                <option value="movie">Movie</option>
+                <option value="love">love</option>
+                <option value="gaming">gaming</option>
+              </select>
+              <div id="input-upload-file" class="box-shadow">
+                <span></span>
+                <input type="file" class="upload" id="fileUp" name="fileUpload" required>
+                <div id="canvas-prop" style="display: none;">
+                <pre id="infos"></pre>
+                <button onclick="save()" download="poster.png" id="Upload">Upload</button>
+              </div>
+              </div>
+        </div>
+      </div>
+
+      <div id="overlay">
+        <div class="loader"></div>
+      </div>
+ 
+  <!-- Firebase library -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script> 
+ <script src="./config.js"></script>
+<script src="./lib/index.js"></script>
+<script src="./scripts/upload/upload.js"></script>
+
+
+</body>
+</html>

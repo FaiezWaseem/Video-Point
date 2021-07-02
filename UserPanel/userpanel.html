@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="title">Username</title>
+    <link id="tab_icon" rel="icon" href="../assets/images/profile.png">
+    <link rel="stylesheet" href="../assets/css/userpanel.css">
+</head>
+<body>
+    <div class="sidenav">
+        <a  id="profile">Profile</a>
+        <a  id="vid">MyVideos</a>
+        <a id="uploadx">Upload</a>
+        <a id="watched">Watched</a>
+        <a id="saved">Saved</a>
+        <a id="help">Help</a>
+      </div>
+      
+<div class="main">
+<div class="profile flex">
+    <div class="container">
+        <div class="profilebox">
+        <img src="../profile.png" id="avatar" alt="image not found">
+        <h2 id="uname">UserName</h2>
+        <h4 id="uemail">Email@.gmail.com</h4>
+        
+<button class="edit" onclick="editClick();">Edit</button>
+
+
+</div>
+<a id="anker" onclick="GoTOHome();">Go Back To home</a>
+<div class="btn">
+    <button class="none"  id="select">Select</button>
+    <button class="none" id="upload">Upload</button>
+</div>
+
+<div id="myProgress" class="none">
+    <div id="myBar"></div>
+    <h4 id="per"></h4>
+  </div>
+</div>
+</div>
+<div class="videos" style="display: none;">
+        <h1>MyVideos</h1>
+        <div class="videos__container">
+
+        </div>
+
+     
+
+
+</div>
+<div class="help" style="display: none;"></div>
+</div>
+
+
+
+<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script> 
+<script src="../assets/config.js"></script>
+<script src="../assets/lib/index.js"></script>
+<script src="../assets/scripts/account/profile.js"></script>
+</body>
+</html>

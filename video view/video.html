@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="title">VideoPoint~Video</title>
+    <link rel="icon" href="../assets/images/img_avatar.png" id="tab_icon">
+        <!-- font awesome link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+   integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+     crossorigin="anonymous" />
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- CSS File -->
+ <link rel="stylesheet" href="../assets/css/vid.css">
+
+</head>
+<body>
+       <!-- Header Starts -->
+       <div class="header">
+        <div class="header__left">
+          <i id="menu" class="material-icons">menu</i>
+          <h1><a href="../index.html">VideoPoint</a></h1>
+        </div>
+  
+        <div class="header__search">
+            <input type="text" placeholder="Search here" />
+            <button id="search"><i class="material-icons">search</i></button>
+        </div>
+  
+        <div class="header__icons">
+          <i class="material-icons display-this">search</i>
+          <i class="material-icons" id="upload" >videocam</i>
+          <i class="material-icons">apps</i>
+          <i class="material-icons">notifications</i>
+          <i class="material-icons display-this" id="account">account_circle</i>
+        </div>
+      </div>
+      <!-- Header Ends -->
+    <!-- Main Body Starts -->
+    <div class="mainBody">
+        <!-- Sidebar Starts -->
+  
+        <div class="sidebar">
+          <div class="sidebar__categories">
+            <div class="sidebar__category">
+              <i class="material-icons">home</i>
+              <span><a href="../index.html">Home</a></span>
+            </div>
+            <div class="sidebar__category">
+              <i class="material-icons">local_fire_department</i>
+              <span>Trending</span>
+            </div>
+            <div class="sidebar__category">
+              <i class="material-icons">subscriptions</i>
+              <span>Subcriptions</span>
+            </div>
+          </div>
+          <hr />
+          <div class="sidebar__categories">
+            <div class="sidebar__category">
+              <i class="material-icons">library_add_check</i>
+              <span>Library</span>
+            </div>
+            <div class="sidebar__category">
+              <i class="material-icons">history</i>
+              <span>History</span>
+            </div>
+            <div class="sidebar__category">
+              <i class="material-icons">play_arrow</i>
+              <span>Your Videos</span>
+            </div>
+            <div class="sidebar__category">
+              <i class="material-icons">watch_later</i>
+              <span>Watch Later</span>
+            </div>
+            <div class="sidebar__category">
+              <i class="material-icons">thumb_up</i>
+              <span>Liked Videos</span>
+            </div>
+          </div>
+          <hr />
+        </div>
+        <!-- Sidebar Ends -->
+    <div class="container">
+        <div class="item1">
+            <div id='player'>
+                <video id='video-element'>
+                    <source src='https://www.w3schools.com/html/mov_bbb.mp4' type='video/mp4'>
+                </video>
+                <div id='controls'>
+                    <progress id='progress-bar' min='0' max='100' value='0'>0% played</progress>
+                    <button id='btnReplay' class='replay button' title='replay' accesskey="R" onclick='replayVideo();'>Replay</button>	
+                    <button id='btnPlayPause' class='play button' title='play' accesskey="P" onclick='playPauseVideo();'>Play</button>
+                    <button id='btnStop' class='stop button' title='stop' accesskey="X" onclick='stopVideo();'>Stop</button>
+              <input type="range" id="volume-bar" title="volume" min="0" max="1" step="0.1" value="1">
+                    <button id='btnMute' class='mute button' title='mute' onclick='muteVolume();'>Mute</button>	
+              <button id='btnFullScreen' class='fullscreen button' title='toggle full screen' accesskey="T" onclick='toggleFullScreen();'>[&nbsp;&nbsp;]</button>
+                </div>
+            </div>	
+            <div class="vid__details">
+              <div class="vid__title_box">
+               <h3 id="vid_title" >Bunny Bee here</h3>
+              </div>
+              <div class="vid__data_box">
+                <div class="vid-meta-data">
+                  <span id="views">234,344view</span>
+                  <span id="date">23/3/2021</span>
+                </div>
+                <div class="vid_extra">
+                  <i class="material-icons" id="font_like">favorite_border</i>
+                  <span id="like_count">0</span>
+                  <div class="dropdown">
+                    <i class="material-icons" id="font_share" onclick="dropDownList()">share</i>
+                    <div id="myDropdown" class="dropdown-content">
+                      <a href="#" onclick="sharelink()">Copy Video Link</a>
+                      <a href="#">Add To Watch Later </a>
+                      <a href="#">Link 3</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      <div class="vid_uploader">
+         <div class="userprofile">
+            <img src="../assets/images/img_avatar.png" alt="no img" id="avatar">
+            <h4 id="username">Username</h4>
+         </div>
+         <div class="vid__des">
+           <p id="des">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur neque nulla quas! Delectus tempora porro a quis dolores nulla in impedit. Obcaecati atque soluta praesentium aspernatur eaque iusto consequuntur consequatur.</p>
+         </div>
+      </div>
+        </div>
+        <div class="item2">
+          <!-- Videos Section -->
+         
+        </div>
+        <!-- item2 end(video Section ) -->
+      </div>
+      <!--  container end -->
+
+      </div>
+
+ <!-- Firebase library -->
+ <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-database.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script> 
+<script src="../assets/config.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+<script src="../assets/lib/index.js"></script>
+<script src="../assets/scripts/video/index.js"></script>
+</body>
+</html>
