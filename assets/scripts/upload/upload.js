@@ -50,7 +50,7 @@ function setFileInfo() {
   video2.src = URL.createObjectURL(files[0]);
   videoPicked = files[0];
 }
-// save Canvas image
+// save 
 function save(){
     inputVal();
     if(isvideo){

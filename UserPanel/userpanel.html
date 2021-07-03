@@ -52,6 +52,50 @@
 
 
 </div>
+<div class="UploadFile" style="display: none;">
+    <div class="container" id="upload_container">
+        <h3>Upload your File :</h3>
+        <div class="drag-area">
+          <div class="icon">
+            <i class="fas fa-images"></i>
+          </div>
+      
+          <span class="header">Drag & Drop</span>
+          <span class="header">or <span class="button">browse</span></span>
+          <input type="file" hidden />
+          <span class="support">Supports: mp4</span>
+        </div>
+      </div>
+      <div class="video-box" style="display: none;">
+        <video  id="video"  autoplay controls loop   width="500px" height="250px">
+        </video>
+        <div class="box-shadow">
+            <input type="text"  id="title" placeholder="Enter Video Title" required>
+            <input type="text"  id="des" placeholder="Enter Video Description" required>
+            <label for="type">Choose Video type :</label>
+                <select id="type" name="cars">
+                  <option value="comedy">Comedy</option>
+                  <option value="news">News</option>
+                  <option value="action">Action</option>
+                  <option value="sad">Sad</option>
+                  <option value="music">Music</option>
+                  <option value="movie">Movie</option>
+                  <option value="love">love</option>
+                  <option value="gaming">gaming</option>
+                </select>
+                <div id="input-upload-file" class="box-shadow">
+                  <span></span>
+                  <pre id="infos"></pre>
+                  <button onclick="save()" download="poster.png" id="Upload">Upload</button>
+                </div>
+                </div>
+              </div>
+ 
+
+    </video>
+    
+    </div>
+      
 <div class="help" style="display: none;"></div>
 </div>
 

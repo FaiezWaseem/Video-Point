@@ -203,7 +203,10 @@ function pause_vid()
         
     }
   }
+//----------------X----V-I-D-E-O--L-O-G-I-C----E-N-D---X----
 
+
+  //-----------------Onshare CLick DropDownList---------------//
   function dropDownList() {
     document.getElementById("myDropdown").classList.toggle("show");
   }
@@ -220,6 +223,7 @@ function pause_vid()
     }
   }
 
+  //--------Get Video Share Link
   function sharelink(){
     var url2 = new URL(window.location.href);
     copytext(url2);
@@ -234,10 +238,10 @@ if(c2 === ""){
   key = c2;
 }
 
-//-------------------------------------------------------------------------------
+//------------------DATABASE WORKING STARTED---------------------------------------------//
 
 firebaseGetData(key);
-
+//------Loading Video Recommendation
 firebase.database().ref('video').limitToLast(7).on('child_added',function(snapshot){
   let ul = get('.item2');
   ul.innerHTML += `             <div class="box" data-id="${snapshot.key}" onclick="clickvid(this)">
@@ -251,12 +255,14 @@ firebase.database().ref('video').limitToLast(7).on('child_added',function(snapsh
 </div>`
 })
 
+//---CLicked a Recommended Video------//
 function clickvid(key){
   id = key.getAttribute('data-id')
   firebaseGetData(id);
   loadComment(id);
 }
 
+//CLicked Liked /Unliked
 DomEvent('#font_like', 'click', function(){
  if(islogin){
    if(myliked){myliked = false;CheckUnLiked()}else{ myliked = true;CheckLiked()}
@@ -267,7 +273,7 @@ DomEvent('#font_like', 'click', function(){
 })
 
 
-// ---------Like Logic-----------//
+// ---------Load Post Total Like-----------//
 function likedList(data){
   var id = data;
   var x = 0;
@@ -290,7 +296,7 @@ firebase.database().ref('video/'+id+'/liked/').on('child_added',function(snapsho
   }}
 })
 }
-//Clicked Liked
+// OnLiked 
 function CheckLiked(){
  var like_id = document.getElementById("like_count");
  var likes= like_id.innerText++;
@@ -306,7 +312,7 @@ function CheckLiked(){
  // post liked now setting like button to invisible
 document.getElementById('font_like').textContent="favorite";
 }
-//Clicked Unliked
+//On Unliked
 function CheckUnLiked(){
   var like_id = document.getElementById("like_count");
   var likes= like_id.innerText--;
@@ -320,6 +326,9 @@ function CheckUnLiked(){
  
 }
 
+/*----------Check If User Scrolled to bottom
+-----------and Load More Videos
+*/
 var element = get('.container')
 var _x = 0
 DomEvent('.container','scroll',function(){
@@ -344,6 +353,7 @@ DomEvent('.container','scroll',function(){
       }
 
 })
+//-----Get Video Data------------//
 function firebaseGetData(val){
   firebase.database().ref("video/"+val).once('value').then(function (snapshot) {
     var url = snapshot.val().video;
@@ -360,10 +370,11 @@ function firebaseGetData(val){
   likedList(snapshot.val().key)
   });
 }
-
+//------User Click on Comment heading to Toggle------//
 DomEvent('#click_Comment','click',function(){
   get('.comment_box').classList.toggle("block");
 })
+//--------User write a comment on post---------//
 DomEvent('#comment_send','click',function(){
   if(islogin){
     var t = getTimeinMilli();
@@ -381,6 +392,7 @@ get('#comment').value = "";
   }else{a("You need to Login Before Commenting")}
 })
 
+//-----Load Comment-----------//
 function loadComment(post){
   var item = get('.comment_box');
   item.innerHTML += "";
@@ -406,7 +418,7 @@ function loadComment(post){
 loadComment(key);
 
 
-
+//------User Report a video--------//
 DomEvent('#report','click',function () {
   var r = prompt("Please Enter a Reason of Report");
 
@@ -419,6 +431,7 @@ if (r != null) {
   a("Reported")
 }
 })
+//------User add video to watch Later------//
 DomEvent('#watchLater','click',function () {
   if(islogin){
     var newPostKey = firebase.database().ref().child('video').push().key;
@@ -430,3 +443,4 @@ DomEvent('#watchLater','click',function () {
     a("added")
   }else{a("You need To Login First")}
 })
+
