@@ -33,7 +33,6 @@ var title , des , type , emp=false;
 
 
 
-
 firebase.database().ref("users/"+uid).once('value').then(function (snapshot) {
     Username = snapshot.val().name;
     avatar = snapshot.val().profile;
@@ -130,7 +129,7 @@ upload.onclick = function (){
 
 }
 
-
+//--------SIDEBAR TOGGLES-----------------//
 DomEvent('#vid','click', function(){
     get('.profile').style.display = 'none';
     get('.UploadFile').style.display = 'none';
@@ -146,6 +145,8 @@ DomEvent('#uploadx','click', function(){
     get('.profile').style.display = 'none';
     get('.UploadFile').style.display = 'block';
 })
+
+//--------------MY VIDEOS--------------//
 function myVideos(){
     var ul = get('.videos__container')
     firebase.database().ref('Userposts/'+uid).on('child_added',function(snapshot){
@@ -178,6 +179,22 @@ function videoClicked(vid){
     window.location.replace('/video view/index.html');
   }
 
+
+
+
+//---------------VIDEO UPLOAD------------------//
+
+
+  function inputVal(){
+    title = getvalue('#vidtitle');
+    des = getvalue('#des')
+    type = getvalue('#type')
+    
+    if(title == "" || des == ""  || type == ""){
+        a("Please Fill out all fields");
+        emp = false;
+    }else{emp=true}
+  }
   const dropArea = get('.drag-area');
   const dragText = get('.header');
   
@@ -204,9 +221,9 @@ dropArea.addEventListener('dragleave', () => {
 dropArea.addEventListener('drop', (event) => {
   event.preventDefault();
   // console.log('File is dropped in drag area');
-
-  file = event.dataTransfer.files[0]; // grab single file even of user selects multiple files
-  // console.log(file);
+  files = event.dataTransfer.files[0]; // grab single file even of user selects multiple files
+  myVideo.push(files);
+  videoPicked = files;
   displayFile();
 });
 
@@ -249,10 +266,10 @@ button.onclick = () => {
 input.addEventListener('change', function () {
   files = this.files[0];
   myVideo.push(this.files[0]);
+  videoPicked = files[0];
   dropArea.classList.add('active');
   displayFile();
 });
-
 
 
 function getFileinfo() {
@@ -266,10 +283,82 @@ function getFileinfo() {
   c("File Size :"+fileSize)
   c("File name :"+videoTitle)
   infos.innerHTML =  videoTitle + "  "+video_Time +"  "+ fileSize;
+
 }
 
 function isSizeBig(size){
   if(size > 53000000){
      isFileSize = false
   }
+}
+
+function uploadVideo() {
+  inputVal();
+  if(emp){dbUpload()}
+}
+function dbUpload() {
+    //firebase cloud storage
+ var uploadTask = firebase.storage().ref('vid/'+rand+videoTitle).put(files);
+
+ uploadTask.on('state_changed', function(snapshot){
+      var progress = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+   c(progress);
+get('.jquery').style.width = Math.floor(progress) +"%";
+ },
+ //error catching
+ function(error){
+    a(error);
+ },
+
+ //on upload success
+ function(){
+     uploadTask.snapshot.ref.getDownloadURL().then(function(url){
+   DBUpload(url);
+  });
+  //realtime db
+   alert("Upload Successfull");
+ }
+ 
+ );
+}
+function DBUpload(url){
+  // Get a key for a new Post.
+  var t = getTimeinMilli();
+var newPostKey = firebase.database().ref().child('video').push().key;
+  firebase.database().ref("video/"+newPostKey).set({
+    "video":url,
+    "title": title,
+    "videoSize": fileSize,
+    "VideoMillisec": videoMilliSec,
+    "duration":video_Time,
+    "view": "0",
+    "type": type,
+    "des": des,
+     "likes":"0",
+     "uid": uid,
+     "time":t,
+     "key":newPostKey,
+     "username":Username,
+     "profile":avatar
+
+  })
+  firebase.database().ref("Userposts/"+uid+"/"+newPostKey).set({
+    "video":url,
+    "title": title,
+    "videoSize": fileSize,
+    "VideoMillisec": videoMilliSec,
+    "duration":video_Time,
+    "view": "0",
+    "type": type,
+    "des": des,
+     "likes":"0",
+     "uid": uid,
+     "time":t,
+     "key":newPostKey,
+     "username":Username,
+     "profile":avatar
+
+  })
+  get('.video-box').style.width = 'none';
+  get('#upload_container').style.width = 'block';
 }
