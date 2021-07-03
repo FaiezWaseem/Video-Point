@@ -10,7 +10,7 @@ menu.addEventListener('click', function () {
 
 DomEvent('#upload', "click", function(){
   if(islogin){
-  window.location.href = '/Video-Point/assets/Video_Upload.html'}
+  window.location.href = '/Video-Point/UserPanel/userpanel.html'}
   else{
     a("You need to Login To Upload a video");
   }
