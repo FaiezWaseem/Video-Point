@@ -1,6 +1,7 @@
 //-----------Variables---------------//
 var islogin = false;
 const auth = firebase.auth();
+var random = rand(6);
 
 const menu = document.querySelector('#menu');
 const sidebar = document.querySelector('.sidebar');
@@ -24,6 +25,7 @@ DomEvent('#account','click',function()
   }
 })
 
+
 getVideos();
 
 function getVideos(){
@@ -31,6 +33,7 @@ function getVideos(){
   var ul2 = get('#Latest');
   var ul3 = get('#comedy');
   var ul4 = get('#love');
+  if(random >= 4 ){
   firebase.database().ref('video').limitToFirst(3).on('child_added',function(snapshot){
     ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
     <div class="video__thumbnail" data-id="${snapshot.key}">
@@ -52,6 +55,29 @@ function getVideos(){
   </div>`
 
   })
+}else{
+  firebase.database().ref('video').limitToLast(3).on('child_added',function(snapshot){
+    ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
+    <div class="video__thumbnail" data-id="${snapshot.key}">
+    <video src="${snapshot.val().video}" class="video__thumbnail">
+    </div>
+    <div class="video__details">
+      <div class="author">
+        <img
+          src="${snapshot.val().profile}"
+          alt=""
+        />
+      </div>
+      <div class="title">
+        <h3>${snapshot.val().title}</h3>
+        <a href="">${snapshot.val().username}</a>
+        <span>${snapshot.val().view}view • ${convertTime(snapshot.val().time)}</span>
+      </div>
+    </div>
+  </div>`
+
+});
+}
   firebase.database().ref('video').limitToLast(3).on('child_added',function(snapshot){
     ul2.innerHTML += `          <div class="video"  data-id="${snapshot.key}" onclick="videoClicked(this)">
   <div class="video__thumbnail" data-id="${snapshot.key}">
