@@ -134,21 +134,32 @@ DomEvent('#vid','click', function(){
     get('.profile').style.display = 'none';
     get('.UploadFile').style.display = 'none';
     get('.videos').style.display = 'block';
-})
-DomEvent('#profile','click', function(){
-    get('.videos').style.display = 'none';
-    get('.UploadFile').style.display = 'none';
-    get('.profile').style.display = 'block';
+    get('#watchlater').style.display = 'none';
+    myVideos();
+  })
+  DomEvent('#profile','click', function(){
+  get('#watchlater').style.display = 'none';
+  get('.videos').style.display = 'none';
+  get('.UploadFile').style.display = 'none';
+  get('.profile').style.display = 'block';
 })
 DomEvent('#uploadx','click', function(){
+  get('#watchlater').style.display = 'none';
     get('.videos').style.display = 'none';
     get('.profile').style.display = 'none';
     get('.UploadFile').style.display = 'block';
 })
-
+DomEvent('#watched','click',function () {
+     get('.profile').style.display = 'none';
+    get('.UploadFile').style.display = 'none';
+    get('.videos').style.display = 'none';
+    get('#watchlater').style.display = 'block'; 
+    watchLaterVideos();
+})
 //--------------MY VIDEOS--------------//
 function myVideos(){
     var ul = get('.videos__container')
+    ul.innerHTML = "";
     firebase.database().ref('Userposts/'+uid).on('child_added',function(snapshot){
         ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
         <div class="video__thumbnail" data-id="${snapshot.key}">
@@ -171,7 +182,35 @@ function myVideos(){
     
       })
 }
-myVideos();
+function watchLaterVideos() {
+  var ul = get('.videos_Watch_Later')
+  ul.innerHTML = "";
+  firebase.database().ref('watchLater/'+uid+"/").on('child_added',function(snapshot){
+          var pkey = snapshot.val().vid_key;
+          firebase.database().ref('video/'+pkey).once('value').then(function (snapshot){
+      ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
+      <div class="video__thumbnail" data-id="${snapshot.key}">
+      <video src="${snapshot.val().video}" class="video__thumbnail">
+      </div>
+      <div class="video__details">
+        <div class="author">
+          <img
+            src="${snapshot.val().profile}"
+            alt=""
+          />
+        </div>
+        <div class="title">
+          <h3>${snapshot.val().title}</h3>
+          <a href="">${snapshot.val().username}</a>
+          <span>${snapshot.val().view}view • ${convertTime(snapshot.val().time)}</span>
+        </div>
+      </div>
+    </div>`
+  
+    });
+  });
+}
+
 function videoClicked(vid){
     var id = vid.getAttribute("data-id");
     c(id);
@@ -360,5 +399,5 @@ var newPostKey = firebase.database().ref().child('video').push().key;
 
   })
   get('.video-box').style.width = 'none';
-  get('#upload_container').style.width = 'block';
+  get('.UploadFile').style.width = 'block';
 }
