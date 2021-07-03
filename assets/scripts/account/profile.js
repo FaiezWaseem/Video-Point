@@ -21,6 +21,8 @@ var rand1 = Math.floor((Math.random() * 99999999999) + 1);
 var rand = Math.floor((Math.random() * rand1) + 1);
 c(rand);
 var myVideo = [];
+var  mapName = [];
+var  mapProfile = [];
 var isvideo = false;
 var videoMilliSec = 0;
 var video_Time ;
@@ -158,9 +160,15 @@ DomEvent('#watched','click',function () {
 })
 //--------------MY VIDEOS--------------//
 function myVideos(){
+  var $profile;
     var ul = get('.videos__container')
     ul.innerHTML = "";
     firebase.database().ref('Userposts/'+uid).on('child_added',function(snapshot){
+      for(let d = 0 ; d<= mapProfile.length-1; d++){
+        if(mapProfile[d].uid === snapshot.val().uid){
+             $profile  = mapProfile[d].profile;
+        }
+      }
         ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
         <div class="video__thumbnail" data-id="${snapshot.key}">
         <video src="${snapshot.val().video}" class="video__thumbnail">
@@ -168,7 +176,7 @@ function myVideos(){
         <div class="video__details">
           <div class="author">
             <img
-              src="${snapshot.val().profile}"
+              src="${$profile}"
               alt=""
             />
           </div>
@@ -183,11 +191,18 @@ function myVideos(){
       })
 }
 function watchLaterVideos() {
+  var $profile;
   var ul = get('.videos_Watch_Later')
   ul.innerHTML = "";
   firebase.database().ref('watchLater/'+uid+"/").on('child_added',function(snapshot){
+
           var pkey = snapshot.val().vid_key;
           firebase.database().ref('video/'+pkey).once('value').then(function (snapshot){
+            for(let d = 0 ; d<= mapProfile.length-1; d++){
+              if(mapProfile[d].uid === snapshot.val().uid){
+                   $profile  = mapProfile[d].profile;
+              }
+            }
       ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
       <div class="video__thumbnail" data-id="${snapshot.key}">
       <video src="${snapshot.val().video}" class="video__thumbnail">
@@ -195,7 +210,7 @@ function watchLaterVideos() {
       <div class="video__details">
         <div class="author">
           <img
-            src="${snapshot.val().profile}"
+            src="${$profile}"
             alt=""
           />
         </div>
@@ -217,7 +232,25 @@ function videoClicked(vid){
     localStorage.setItem('key',id);
     window.location.replace('/video view/index.html');
   }
-
+function  getusersDetail() {
+  firebase.database().ref('users').on('child_added',function(snapshot){
+    var username = snapshot.val().name        
+    var avatar = snapshot.val().profile        
+    var _uid = snapshot.val().uid        
+    data = {
+              'name': username,
+              'uid':_uid 
+            }
+    data2 = {
+              'profile': avatar,
+              'uid':_uid 
+            }
+            mapName.push(data)
+            mapProfile.push(data2)
+            
+  });
+}
+getusersDetail();
 
 
 

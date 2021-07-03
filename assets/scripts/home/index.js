@@ -2,7 +2,27 @@
 var islogin = false;
 const auth = firebase.auth();
 var random = rand(6);
-
+var  $profile;
+var  mapName = [];
+var  mapProfile = [];
+function  getusersDetail() {
+  firebase.database().ref('users').on('child_added',function(snapshot){
+    var username = snapshot.val().name        
+    var avatar = snapshot.val().profile        
+    var _uid = snapshot.val().uid        
+    data = {
+              'name': username,
+              'uid':_uid 
+            }
+    data2 = {
+              'profile': avatar,
+              'uid':_uid 
+            }
+            mapName.push(data)
+            mapProfile.push(data2)
+            
+  });
+}
 const menu = document.querySelector('#menu');
 const sidebar = document.querySelector('.sidebar');
 menu.addEventListener('click', function () {
@@ -35,6 +55,11 @@ function getVideos(){
   var ul4 = get('#love');
   if(random >= 4 ){
   firebase.database().ref('video').limitToFirst(3).on('child_added',function(snapshot){
+    for(let d = 0 ; d<= mapProfile.length-1; d++){
+      if(mapProfile[d].uid === snapshot.val().uid){
+           $profile  = mapProfile[d].profile;
+      }
+    }
     ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
     <div class="video__thumbnail" data-id="${snapshot.key}">
     <video src="${snapshot.val().video}" class="video__thumbnail">
@@ -42,7 +67,7 @@ function getVideos(){
     <div class="video__details">
       <div class="author">
         <img
-          src="${snapshot.val().profile}"
+          src="${$profile}"
           alt=""
         />
       </div>
@@ -57,6 +82,11 @@ function getVideos(){
   })
 }else{
   firebase.database().ref('video').limitToLast(3).on('child_added',function(snapshot){
+    for(let d = 0 ; d<= mapProfile.length-1; d++){
+      if(mapProfile[d].uid === snapshot.val().uid){
+           $profile  = mapProfile[d].profile;
+      }
+    }
     ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
     <div class="video__thumbnail" data-id="${snapshot.key}">
     <video src="${snapshot.val().video}" class="video__thumbnail">
@@ -64,7 +94,7 @@ function getVideos(){
     <div class="video__details">
       <div class="author">
         <img
-          src="${snapshot.val().profile}"
+          src="${$profile}"
           alt=""
         />
       </div>
@@ -79,6 +109,11 @@ function getVideos(){
 });
 }
   firebase.database().ref('video').limitToLast(3).on('child_added',function(snapshot){
+    for(let d = 0 ; d<= mapProfile.length-1; d++){
+      if(mapProfile[d].uid === snapshot.val().uid){
+           $profile  = mapProfile[d].profile;
+      }
+    }
     ul2.innerHTML += `          <div class="video"  data-id="${snapshot.key}" onclick="videoClicked(this)">
   <div class="video__thumbnail" data-id="${snapshot.key}">
   <video src="${snapshot.val().video}" class="video__thumbnail">
@@ -86,7 +121,7 @@ function getVideos(){
   <div class="video__details">
     <div class="author">
       <img
-        src="${snapshot.val().profile}"
+        src="${$profile}"
         alt=""
       />
     </div>
@@ -100,6 +135,11 @@ function getVideos(){
   
   });
   firebase.database().ref('video').orderByChild('type').equalTo('comedy').limitToLast(6).on('child_added',function(snapshot){
+    for(let d = 0 ; d<= mapProfile.length-1; d++){
+      if(mapProfile[d].uid === snapshot.val().uid){
+           $profile  = mapProfile[d].profile;
+      }
+    }
     ul3.innerHTML += `          <div class="video" data-id="${snapshot.key}"  onclick="videoClicked(this)">
   <div class="video__thumbnail" data-id="${snapshot.key}">
   <video src="${snapshot.val().video}" class="video__thumbnail">
@@ -107,7 +147,7 @@ function getVideos(){
   <div class="video__details">
     <div class="author">
       <img
-        src="${snapshot.val().profile}"
+        src="${$profile}"
         alt=""
       />
     </div>
@@ -121,6 +161,11 @@ function getVideos(){
   
   });
   firebase.database().ref('video').orderByChild('type').equalTo('love').limitToLast(6).on('child_added',function(snapshot){
+    for(let d = 0 ; d<= mapProfile.length-1; d++){
+      if(mapProfile[d].uid === snapshot.val().uid){
+           $profile  = mapProfile[d].profile;
+      }
+    }
     ul4.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
   <div class="video__thumbnail" data-id="${snapshot.key}">
   <video src="${snapshot.val().video}" class="video__thumbnail">
@@ -128,7 +173,7 @@ function getVideos(){
   <div class="video__details">
     <div class="author">
       <img
-        src="${snapshot.val().profile}"
+        src="${$profile}"
         alt=""
       />
     </div>
