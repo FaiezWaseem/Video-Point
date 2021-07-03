@@ -154,7 +154,7 @@ color: white;
   overflow-y: scroll;
 }
 
-.videos__container {
+.videos__container , .videos_Watch_Later {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
