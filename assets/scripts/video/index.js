@@ -232,6 +232,15 @@ function pause_vid()
 //----------------X----V-I-D-E-O--L-O-G-I-C----E-N-D---X----
 
 
+// --------Getting Url Parameeters
+var url = new URL(window.location.href);
+var c2 = url.searchParams.get("page");
+if(c2 === ""){
+
+}else{
+key = c2;
+}
+
   //-----------------Onshare CLick DropDownList---------------//
   function dropDownList() {
     document.getElementById("myDropdown").classList.toggle("show");
@@ -252,17 +261,8 @@ function pause_vid()
   //--------Get Video Share Link
   function sharelink(){
     var url2 = new URL(window.location.href);
-    copytext(url2);
+    copytext('/Video-Point/video%20view/video.html?page='+key);
   }
-
-// --------Getting Url Parameeters
-  var url = new URL(window.location.href);
-  var c2 = url.searchParams.get("page");
-if(c2 === ""){
-
-}else{
-  key = c2;
-}
 
 //------------------DATABASE WORKING STARTED---------------------------------------------//
 
@@ -282,10 +282,11 @@ firebase.database().ref('video').limitToLast(7).on('child_added',function(snapsh
 })
 
 //---CLicked a Recommended Video------//
-function clickvid(key){
-  id = key.getAttribute('data-id')
-  firebaseGetData(id);
-  loadComment(id);
+function clickvid(key2){
+  id = key2.getAttribute('data-id');
+  key = id;
+  firebaseGetData(key);
+  loadComment(key);
 }
 
 //CLicked Liked /Unliked
