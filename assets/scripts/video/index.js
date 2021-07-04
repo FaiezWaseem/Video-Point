@@ -139,7 +139,14 @@ function pause_vid()
   	resetPlayer();
   	player.play();
   }
+  function formatTime(timeInSeconds) {
+    const result = new Date(timeInSeconds * 1000).toISOString().substr(11, 8);
   
+    return {
+      minutes: result.substr(3, 2),
+      seconds: result.substr(6, 2),
+    };
+  }
   // Update the progress bar
   function updateProgressBar() {
   	// Work out how much of the media has played via the duration and currentTime parameters
@@ -148,6 +155,10 @@ function pause_vid()
   	progressBar.value = percentage;
   	// Update the progress bar's text (for browsers that don't support the progress element)
   	progressBar.innerHTML = percentage + '% played';
+    const time = formatTime( Math.round(player.duration));
+    const time2 = formatTime( Math.round(player.currentTime));
+
+    get('#video_time').innerText = time2.minutes+"m : "+time2.seconds+"s"  +"/"+time.minutes+"m : "+time.seconds+"s";
   }
   
   // Updates a button's title, innerHTML and CSS class
@@ -252,7 +263,7 @@ firebase.database().ref('video').limitToLast(7).on('child_added',function(snapsh
   let ul = get('.item2');
   ul.innerHTML += `             <div class="box" data-id="${snapshot.key}" onclick="clickvid(this)">
   <div class="video">
-      <video src="${snapshot.val().video}" id="${snapshot.key}" onmouseover="hover(this);" onmouseout="hoverout($)">
+      <video src="${snapshot.val().video}" id="${snapshot.key}" onmouseover="hover(this);" onmouseout="hoverout(this)">
   </div>
  <div class="v-details">
       <h2 id="v-details">${snapshot.val().title}</h2>
