@@ -203,7 +203,7 @@ function watchLaterVideos() {
                    $profile  = mapProfile[d].profile;
               }
             }
-      ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
+      ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onmouseover="del()" onclick="videoClicked(this)">
       <div class="video__thumbnail" data-id="${snapshot.key}">
       <video src="${snapshot.val().video}" class="video__thumbnail">
       </div>
@@ -227,10 +227,10 @@ function watchLaterVideos() {
 }
 
 function videoClicked(vid){
-    var id = vid.getAttribute("data-id");
-    c(id);
-    localStorage.setItem('key',id);
-    window.location.replace('/video view/index.html');
+  var id = vid.getAttribute("data-id");
+  //  c(id);
+  // localStorage.setItem('key',id);
+  window.location.href = '/Video-Point/video view/video.html?page='+id;
   }
 function  getusersDetail() {
   firebase.database().ref('users').on('child_added',function(snapshot){
@@ -249,6 +249,12 @@ function  getusersDetail() {
             mapProfile.push(data2)
             
   });
+}
+function del() {
+  r = confirm("Do you Want To Delete This Saved Later Video");
+  if(r == true){
+    a('deleted');
+  }
 }
 getusersDetail();
 
@@ -434,3 +440,4 @@ var newPostKey = firebase.database().ref().child('video').push().key;
   get('.video-box').style.width = 'none';
   get('.UploadFile').style.width = 'block';
 }
+//-----------------------File Upload finished ---------------------------// 
