@@ -136,5 +136,9 @@ function viewCount(time , view , key){
     firebase.database().ref("video/"+key).update({
       "view":++view
     })
+    firebase.database().ref("views/"+key).set({
+      "view":++view,
+      'key':key
+    })
   },x)
 }

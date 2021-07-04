@@ -210,10 +210,10 @@ if(value){islogin=true}else{islogin=false}
 
 function videoClicked(vid){
   var id = vid.getAttribute("data-id");
-  //  c(id);
-  // localStorage.setItem('key',id);
   window.location.href = '/Video-Point/video view/video.html?page='+id;
 }
+
+//---------onscrolled to bottom load more video----------///
 var element = get('.videos')
 var _x = 0
 DomEvent('.videos','scroll',function(){
@@ -257,7 +257,7 @@ DomEvent('#srch','click',function(){
   var low = search.toLowerCase();
   var ul = get('.videos__container');
   ul.innerHTML = "";
-  firebase.database().ref('video').orderByChild('title').startAt(Cap).endAt(low+'\uf8ff').on('child_added',function(snapshot){
+  firebase.database().ref('video').orderByChild('title').startAt(Cap).endAt(low+'\uf8ff').equalTo(search).on('child_added',function(snapshot){
     ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
       <div class="video__thumbnail" data-id="${snapshot.key}">
       <video src="${snapshot.val().video}" class="video__thumbnail">
@@ -280,3 +280,57 @@ DomEvent('#srch','click',function(){
     console.clear();
   })
 })
+
+DomEvent('#home','click',function () {
+  get('.home').style.display = "block";
+  get('.trending_vid').style.display = "none";
+})
+
+//--------Video Trend Logic---------//
+DomEvent('#trend','click',function () {
+  get('.home').style.display = "none";
+  get('.trending_vid').style.display = "block";
+    trend(views)            
+})
+var views = [];
+firebase.database().ref('views').on('child_added',function(snapshot){
+  var obj = {
+     'view':snapshot.val().view,
+     'key':snapshot.val().key
+  }
+  views.push(obj);
+  views.sort(function (x, y) {
+    return y.view - x.view;
+  }) 
+});
+
+
+function trend(views) {
+  var ul = get('#trending');
+  ul.innerHTML= "";
+  for(let i = 0 ; i <= views.length-1; i++){
+    c(i);
+    let pkey = views[i].key;
+    firebase.database().ref('video/'+pkey).once('value').then(function (snapshot){
+      ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
+      <div class="video__thumbnail" data-id="${snapshot.key}">
+      <video src="${snapshot.val().video}" class="video__thumbnail">
+      </div>
+      <div class="video__details">
+        <div class="author">
+          <img
+            src="${snapshot.val().profile}"
+            alt=""
+          />
+        </div>
+        <div class="title">
+          <h3>${snapshot.val().title}</h3>
+          <a href="">${snapshot.val().username}</a>
+          <span>${snapshot.val().view}view • ${convertTime(snapshot.val().time)}</span>
+        </div>
+      </div>
+    </div>`
+      
+           })
+                                              }
+}

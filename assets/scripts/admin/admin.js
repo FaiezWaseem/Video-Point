@@ -18,7 +18,7 @@ cell3.innerHTML =  `<td class="cell" id="username">${snapshot.val().username}</t
 cell4.innerHTML = `<td class="cell" id="date"><span>${convertTime(snapshot.val().time)}</span></td>`;
 cell5.innerHTML = ` <td class="cell" id="status"><span class="badge bg-success">live</span></td>`;
 cell6.innerHTML = ` <td class="cell" id="view">${snapshot.val().view}</td>`;
-cell7.innerHTML = ` <td class="cell" id="link"><a class="btn-sm app-btn-secondary" href="${snapshot.val().video}">View</a></td>`;
+cell7.innerHTML = ` <td class="cell" id="link"><a class="btn-sm app-btn-secondary" href="/Video-Point/video view/video.html?page=${snapshot.key}">View</a></td>`;
     })
 }
 getVideoData();
