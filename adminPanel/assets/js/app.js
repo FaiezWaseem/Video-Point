@@ -1,5 +1,8 @@
-'use strict';
 
+var fir = firebase.database();
+var view_count = 0;
+var user_count = 0;
+var total_reports = 0;
 /* ===== Enable Bootstrap Popover (on element  ====== */
 
 var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="popover"]'))
@@ -94,3 +97,25 @@ searchMobileTrigger.addEventListener('click', () => {
 });
 
 
+function totalView() {
+	fir.ref('views').on('child_added',function(snapshot){
+		view_count = view_count + snapshot.val().view; 
+		get('#total_views').textContent = view_count;
+	})
+
+}
+totalView();
+function totalUser() {
+	fir.ref('users').on('child_added',function(snapshot){
+             user_count++;
+			 get('#total_users').textContent = user_count;
+	})
+}
+totalUser()
+function totalreport(){
+	fir.ref('reports').on('child_added',function(snapshot){
+		total_reports++;
+		get('#report').textContent = total_reports;
+})
+}
+totalreport();
