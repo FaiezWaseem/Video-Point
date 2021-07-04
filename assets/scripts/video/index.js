@@ -56,7 +56,7 @@ player = document.getElementById('video-element');
   volumeBar.addEventListener("change", function(evt) {
 		player.volume = evt.target.value;
 	});
-  document.getElementById('btnFullScreen').disabled = true;
+  
 	// Add a listener for the timeupdate event so we can update the progress bar
 	player.addEventListener('timeupdate', updateProgressBar, false);
 	
@@ -70,14 +70,23 @@ player = document.getElementById('video-element');
 		// Change the button to be a play button
 		changeButtonType(btnPlayPause, 'play');
 	}, false);
-	
+function initializeVideo() {
+  const time = formatTime( Math.round(player.duration));
+  const time2 = formatTime( Math.round(player.currentTime));
+
+  get('#video_time').innerText = time2.minutes+"m : "+time2.seconds+"s"  +"/"+time.minutes+"m : "+time.seconds+"s";
+  player.play();
+  changeButtonType(btnPlayPause, 'pause');
+}
+
+	player.addEventListener('loadedmetadata', initializeVideo);
 	player.addEventListener('volumechange', function(e) { 
 		// Update the button to be mute/unmute
 		if (player.muted) changeButtonType(btnMute, 'unmute');
 		else changeButtonType(btnMute, 'mute');
 	}, false);	
   
-	player.addEventListener('ended', function() { this.pause(); }, false);	
+	player.addEventListener('ended', function() { this.play(); }, false);	
   
   progressBar.addEventListener("click", seek);
 
