@@ -53,6 +53,7 @@ function getVideos(){
   var ul2 = get('#Latest');
   var ul3 = get('#comedy');
   var ul4 = get('#love');
+  var ul5 = get('#sad');
   if(random >= 4 ){
   firebase.database().ref('video').limitToFirst(3).on('child_added',function(snapshot){
     ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
@@ -164,6 +165,28 @@ function getVideos(){
 </div>`
   
   });
+  firebase.database().ref('video').orderByChild('type').equalTo('sad').limitToLast(6).on('child_added',function(snapshot){
+
+    ul5.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
+  <div class="video__thumbnail" data-id="${snapshot.key}">
+  <video src="${snapshot.val().video}" class="video__thumbnail">
+  </div>
+  <div class="video__details">
+    <div class="author">
+      <img
+        src="${snapshot.val().profile}"
+        alt=""
+      />
+    </div>
+    <div class="title">
+      <h3>${snapshot.val().title}</h3>
+      <a href="">${snapshot.val().username}</a>
+      <span>${snapshot.val().view}view • ${convertTime(snapshot.val().time)}</span>
+    </div>
+  </div>
+</div>`
+  
+  });
 }
 //----------------user if loggined---------------------//
 auth.onAuthStateChanged(function(user){
@@ -199,7 +222,7 @@ DomEvent('.videos','scroll',function(){
     c("reached end");
     var ul = get('.videos__container');
     if(_x < 1){
-      firebase.database().ref('video').limitToLast(10).on('child_added',function(snapshot){
+      firebase.database().ref('video').limitToLast(6).on('child_added',function(snapshot){
         ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
       <div class="video__thumbnail" data-id="${snapshot.key}">
       <video src="${snapshot.val().video}" class="video__thumbnail">

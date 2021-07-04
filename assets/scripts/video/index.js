@@ -252,7 +252,7 @@ firebase.database().ref('video').limitToLast(7).on('child_added',function(snapsh
   let ul = get('.item2');
   ul.innerHTML += `             <div class="box" data-id="${snapshot.key}" onclick="clickvid(this)">
   <div class="video">
-      <video src="${snapshot.val().video}" >
+      <video src="${snapshot.val().video}" id="${snapshot.key}" onmouseover="hover(this);" onmouseout="hoverout($)">
   </div>
  <div class="v-details">
       <h2 id="v-details">${snapshot.val().title}</h2>
@@ -345,7 +345,7 @@ DomEvent('.container','scroll',function(){
             let ul = get('.item2');
             ul.innerHTML += `<div class="box" data-id="${snapshot.key}" onclick="clickvid(this)">
             <div class="video">
-                <video src="${snapshot.val().video}" >
+                <video src="${snapshot.val().video} id="${snapshot.key}" onmouseover="hover(this);" onmouseout="hoverout($)" >
             </div>
            <div class="v-details">
                 <h2 id="v-details">${snapshot.val().title}</h2>
@@ -456,3 +456,18 @@ DomEvent('#Description','click',function () {
    toggle('#des')
 
 })
+function hover($) {
+  c("hover on video")
+  var id;
+  id = $.getAttribute('id');
+  var tvideo = document.getElementById(id);
+  c(tvideo);
+  tvideo.play();
+}
+function hoverout($) {
+  c("hoverout ")
+  var id;
+  id = $.getAttribute('id');
+  var tvideo = document.getElementById(id);
+  tvideo.pause();
+}
