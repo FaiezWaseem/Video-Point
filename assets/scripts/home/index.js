@@ -224,3 +224,36 @@ DomEvent('.videos','scroll',function(){
     }
   }
 })
+
+
+
+// --------Search Video -------------//
+DomEvent('#srch','click',function(){
+  var search = getvalue('#srh');
+  var Cap = search.toUpperCase();
+  var low = search.toLowerCase();
+  var ul = get('.videos__container');
+  ul.innerHTML = "";
+  firebase.database().ref('video').orderByChild('title').startAt(Cap).endAt(low+'\uf8ff').on('child_added',function(snapshot){
+    ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
+      <div class="video__thumbnail" data-id="${snapshot.key}">
+      <video src="${snapshot.val().video}" class="video__thumbnail">
+      </div>
+      <div class="video__details">
+        <div class="author">
+          <img
+            src="${snapshot.val().profile}"
+            alt=""
+          />
+        </div>
+        <div class="title">
+          <h3>${snapshot.val().title}</h3>
+          <a href="">${snapshot.val().username}</a>
+          <span>${snapshot.val().view}view • ${convertTime(snapshot.val().time)}</span>
+        </div>
+      </div>
+    </div>`
+  
+    console.clear();
+  })
+})

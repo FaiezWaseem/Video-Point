@@ -100,6 +100,12 @@ player = document.getElementById('video-element');
       pause_vid()
   	}
   }
+
+  document.addEventListener('keyup', event => {
+    if (event.code === 'Space') {
+      playPauseVideo();
+    }
+  })
   function play_vid()
 {
  player.play();
@@ -366,6 +372,7 @@ function firebaseGetData(val){
   get("#avatar").src = snapshot.val().profile;
   get("#tab_icon").href = snapshot.val().profile;
   get('#date').innerHTML = convertTime(snapshot.val().time);
+  get('#des').innerHTML = snapshot.val().des;
   viewCount( snapshot.val().VideoMillisec,  snapshot.val().view, snapshot.val().key)
   likedList(snapshot.val().key)
   });
@@ -444,3 +451,8 @@ DomEvent('#watchLater','click',function () {
   }else{a("You need To Login First")}
 })
 
+//-------Desxcription------Toggle------//
+DomEvent('#Description','click',function () {
+   toggle('#des')
+
+})
