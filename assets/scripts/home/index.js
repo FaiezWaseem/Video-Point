@@ -45,7 +45,6 @@ DomEvent('#account','click',function()
   }
 })
 
-
 getVideos();
 
 function getVideos(){
@@ -248,8 +247,9 @@ DomEvent('.videos','scroll',function(){
   }
 })
 
-
-
+//---------------------------------------------------------------------------//
+//--------------------------SIDE BAR  CLICKS --------------------------------//
+//--------------------------------------------------------------------------//
 // --------Search Video -------------//
 DomEvent('#srch','click',function(){
   var search = getvalue('#srh');
@@ -257,7 +257,7 @@ DomEvent('#srch','click',function(){
   var low = search.toLowerCase();
   var ul = get('.videos__container');
   ul.innerHTML = "";
-  firebase.database().ref('video').orderByChild('title').startAt(Cap).endAt(low+'\uf8ff').equalTo(search).on('child_added',function(snapshot){
+  firebase.database().ref('video').orderByChild('title').startAt(Cap).endAt(low+'\uf8ff').on('child_added',function(snapshot){
     ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
       <div class="video__thumbnail" data-id="${snapshot.key}">
       <video src="${snapshot.val().video}" class="video__thumbnail">
@@ -334,3 +334,40 @@ function trend(views) {
            })
                                               }
 }
+//-----Clicked sidebar menu myvideo---------------//
+DomEvent('#myvideos','click',function()
+{
+  if(islogin){
+    window.location.href = '/Video-Point/UserPanel/userpanel.html';
+  }else{
+    window.location.href = '/Video-Point/Account/signup.html';
+  }
+})
+//-----Clicked sidebar menu myvideo---------------//
+DomEvent('#watch_later','click',function()
+{
+  if(islogin){
+    window.location.href = '/Video-Point/UserPanel/userpanel.html';
+  }else{
+    window.location.href = '/Video-Point/Account/signup.html';
+  }
+})
+//-----Clicked sidebar menu login---------------//
+DomEvent('#login','click',function()
+{
+  if(islogin){
+     a('Already Logged in');
+  }else{
+    window.location.href = '/Video-Point/Account/signup.html';
+  }
+})
+//-----Clicked sidebar menu logout--------------//
+DomEvent('#logout','click',function()
+{
+  if(islogin){
+    auth.signOut();
+    a("Signed Out");
+  }else{
+    a("You are not signed in\nHow can you SignOut")
+  }
+})

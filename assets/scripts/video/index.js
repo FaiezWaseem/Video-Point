@@ -404,6 +404,7 @@ DomEvent('#click_Comment','click',function(){
 //--------User write a comment on post---------//
 DomEvent('#comment_send','click',function(){
   if(islogin){
+    if(!(getvalue('#comment')==="")){
     var t = getTimeinMilli();
     var newPostKey = firebase.database().ref().child('commentDB').push().key;
 firebase.database().ref('commentDB/'+key+"/"+newPostKey).set({
@@ -415,8 +416,17 @@ firebase.database().ref('commentDB/'+key+"/"+newPostKey).set({
      'name':Username
 
 })
-get('#comment').value = "";
+get('#comment').value = "";}
   }else{a("You need to Login Before Commenting")}
+})
+//--------Login Side bar click----------//
+DomEvent('#login','click',function()
+{
+  if(islogin){
+     a('Already Logged in');
+  }else{
+    window.location.href = '/Video-Point/Account/signup.html';
+  }
 })
 
 //-----Load Comment-----------//
