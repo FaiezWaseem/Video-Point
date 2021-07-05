@@ -1,8 +1,10 @@
 'use strict';
 var view = [];
+var view2 = [];
 var x = 0;
 var dataRecieved = false;
 var lineChartConfig;
+var barChartConfig
 
 window.chartColors = {
 	green: '#75c181',
@@ -11,9 +13,9 @@ window.chartColors = {
 	border: '#e7e9ed'
 };
 
-var randomDataPoint = function(){ 
+var LinearDataPoint = function(){ 
 	view = [];
-	firebase.database().ref('views').on('child_added',function(snapshot){
+	firebase.database().ref('views').limitToLast(7).on('child_added',function(snapshot){
    view.push(snapshot.val().view);	
    c(view);
    dataRecieved = true;
@@ -25,7 +27,7 @@ var randomDataPoint = function(){
    window.myBar = new Chart(barChart, barChartConfig);
 })
 };
-randomDataPoint();
+LinearDataPoint();
 function linearChart(){
 //Chart.js Line Chart Example 
 if(dataRecieved){
@@ -145,11 +147,16 @@ if(dataRecieved){
 }
 }
 
-
+firebase.database().ref('views').limitToFirst(7).on('child_added',function(snapshot){
+	view2.push(snapshot.val().view);	
+    barChartData();
+	var barChart = document.getElementById('canvas-barchart').getContext('2d');
+	window.myBar = new Chart(barChart, barChartConfig);
+ })
 
 // Chart.js Bar Chart Example 
-
-var barChartConfig = {
+function barChartData(){
+ barChartConfig = {
 	type: 'bar',
 
 	data: {
@@ -162,13 +169,13 @@ var barChartConfig = {
 			maxBarThickness: 16,
 			
 			data: [
-				23,
-				45,
-				76,
-				75,
-				62,
-				37,
-				83
+				view2[0],
+				view2[1],
+				view2[2],
+				view2[3],
+				view2[4],
+				view2[5],
+				view2[6]
 			]
 		}]
 	},
@@ -181,7 +188,7 @@ var barChartConfig = {
 		},
 		title: {
 			display: true,
-			text: 'Chart.js Bar Chart Example'
+			text: 'View Bar'
 		},
 		tooltips: {
 			mode: 'index',
@@ -219,7 +226,7 @@ var barChartConfig = {
 		
 	}
 }
-
+}
 
 
 
