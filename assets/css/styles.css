@@ -225,6 +225,7 @@ h1 {
     position: fixed;
     top: 4.4rem;
     height: auto;
+    z-index: 1;
   }
 }
 

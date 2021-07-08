@@ -28,7 +28,7 @@ const sidebar = document.querySelector('.sidebar');
 menu.addEventListener('click', function () {
   sidebar.classList.toggle('show-sidebar');
 });
-
+//------upload clicked----------//
 DomEvent('#upload', "click", function(){
   if(islogin){
   window.location.href = '/Video-Point/UserPanel/userpanel.html'}
@@ -36,6 +36,7 @@ DomEvent('#upload', "click", function(){
     a("You need to Login To Upload a video");
   }
 })
+//----Profile Icon Clicked Goto UserPanel---------//
 DomEvent('#account','click',function()
 {
   if(islogin){
@@ -44,7 +45,7 @@ DomEvent('#account','click',function()
     window.location.href = '/Video-Point/Account/signup.html';
   }
 })
-
+//------Loading Videos--------//
 getVideos();
 
 function getVideos(){
@@ -206,7 +207,7 @@ auth.onAuthStateChanged(function(user){
 function isUserLogin(value){
 if(value){islogin=true}else{islogin=false}
 };
-
+//-------VideoClicked ---Go TO Video Page-------------------//
 function videoClicked(vid){
   var id = vid.getAttribute("data-id");
   window.location.href = '/Video-Point/video view/video.html?page='+id;
@@ -221,7 +222,7 @@ DomEvent('.videos','scroll',function(){
     c("reached end");
     var ul = get('.videos__container');
     if(_x < 1){
-      firebase.database().ref('video').limitToLast(6).on('child_added',function(snapshot){
+      firebase.database().ref('video').limitToLast(3).on('child_added',function(snapshot){
         ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
       <div class="video__thumbnail" data-id="${snapshot.key}">
       <video src="${snapshot.val().video}" class="video__thumbnail">
@@ -253,6 +254,7 @@ DomEvent('.videos','scroll',function(){
 // --------Search Video -------------//
 DomEvent('#srch','click',function(){
   var search = getvalue('#srh');
+  if(search === ""){a('Enter Something To seacrh')}else{
   var Cap = search.toUpperCase();
   var low = search.toLowerCase();
   var ul = get('.videos__container');
@@ -279,6 +281,7 @@ DomEvent('#srch','click',function(){
   
     console.clear();
   })
+}
 })
 
 DomEvent('#home','click',function () {

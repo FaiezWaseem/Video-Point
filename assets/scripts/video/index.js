@@ -261,7 +261,7 @@ key = c2;
   //--------Get Video Share Link
   function sharelink(){
     var url2 = new URL(window.location.href);
-    copytext('/Video-Point/video%20view/video.html?page='+key);
+    copytext(url2+key);
   }
 
 //------------------DATABASE WORKING STARTED---------------------------------------------//
