@@ -341,18 +341,18 @@ function trend(views) {
 DomEvent('#myvideos','click',function()
 {
   if(islogin){
-    window.location.href = '/Video-Point/UserPanel/userpanel.html';
+    window.location.href = 'UserPanel/userpanel.html';
   }else{
-    window.location.href = '/Video-Point/Account/signup.html';
+    window.location.href = 'Account/signup.html';
   }
 })
 //-----Clicked sidebar menu myvideo---------------//
 DomEvent('#watch_later','click',function()
 {
   if(islogin){
-    window.location.href = '/Video-Point/UserPanel/userpanel.html';
+    window.location.href = 'UserPanel/userpanel.html';
   }else{
-    window.location.href = '/Video-Point/Account/signup.html';
+    window.location.href = 'Account/signup.html';
   }
 })
 //-----Clicked sidebar menu login---------------//
@@ -361,7 +361,7 @@ DomEvent('#login','click',function()
   if(islogin){
      a('Already Logged in');
   }else{
-    window.location.href = '/Video-Point/Account/signup.html';
+    window.location.href = 'Account/signup.html';
   }
 })
 //-----Clicked sidebar menu logout--------------//
