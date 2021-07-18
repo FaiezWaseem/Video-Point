@@ -31,7 +31,7 @@ menu.addEventListener('click', function () {
 //------upload clicked----------//
 DomEvent('#upload', "click", function(){
   if(islogin){
-  window.location.href = '/Video-Point/UserPanel/userpanel.html'}
+  window.location.href = 'UserPanel/userpanel.html'}
   else{
     a("You need to Login To Upload a video");
   }
@@ -40,9 +40,9 @@ DomEvent('#upload', "click", function(){
 DomEvent('#account','click',function()
 {
   if(islogin){
-    window.location.href = '/Video-Point/UserPanel/userpanel.html';
+    window.location.href = 'UserPanel/userpanel.html';
   }else{
-    window.location.href = '/Video-Point/Account/signup.html';
+    window.location.href = 'Account/signup.html';
   }
 })
 //------Loading Videos--------//

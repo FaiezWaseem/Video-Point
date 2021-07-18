@@ -12,7 +12,7 @@ function get(element){return  document.querySelector(element);}
 function getall(element){return document.querySelectorAll(element);}
 function getvalue(element){return  get(element).value;}
 function hide(element){;get(element).style.display = 'none'}
-function show(element){get(element).style.removeProperty('display');}
+function show(element){get(element).style.removeProperty('flex');}
 function DomEvent(element, type,  output) {get(element).addEventListener(type,output);}
 function rand(val) {return Math.floor((Math.random() * val)+1)}
 function toggle(val){
