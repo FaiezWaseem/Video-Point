@@ -47,146 +47,61 @@ DomEvent('#account','click',function()
 })
 //------Loading Videos--------//
 getVideos();
-
+function videoElem(ul,key,vid,profile,title,name,time,view){
+  ul.innerHTML += `          <div class="video" data-id="${key}"  onclick="vidClicked(this)">
+  <div class="video__thumbnail" data-id="${key}">
+  <video src="${vid}" class="video__thumbnail">
+  </div>
+  <div class="video__details">
+    <div class="author">
+      <img
+        src="${profile}"
+        alt=""
+      />
+    </div>
+    <div class="title">
+      <h3>${title}</h3>
+      <a href="">${name}</a>
+      <span>${view}view • ${convertTime(time)}</span>
+    </div>
+  </div>
+</div>`
+} 
 function getVideos(){
   var ul = get('.videos__container');
   var ul2 = get('#Latest');
   var ul3 = get('#comedy');
   var ul4 = get('#love');
   var ul5 = get('#sad');
+  // recomended videos
   if(random >= 4 ){
-  firebase.database().ref('video').limitToFirst(3).on('child_added',function(snapshot){
-    ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
-    <div class="video__thumbnail" data-id="${snapshot.key}">
-    <video src="${snapshot.val().video}" class="video__thumbnail">
-    </div>
-    <div class="video__details">
-      <div class="author">
-        <img
-          src="${snapshot.val().profile}"
-          alt=""
-        />
-      </div>
-      <div class="title">
-        <h3>${snapshot.val().title}</h3>
-        <a href="">${snapshot.val().username}</a>
-        <span>${snapshot.val().view}view • ${convertTime(snapshot.val().time)}</span>
-      </div>
-    </div>
-  </div>`
-
-  })
+    firebase.database().ref('video').limitToFirst(3).on('child_added',function(snapshot){
+        var s = snapshot.val();
+        videoElem(ul,snapshot.key,s.video,s.profile,s.title,s.username,s.time,s.view)
+    })
 }else{
-  firebase.database().ref('video').limitToLast(3).on('child_added',function(snapshot){
-    ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
-    <div class="video__thumbnail" data-id="${snapshot.key}">
-    <video src="${snapshot.val().video}" class="video__thumbnail">
-    </div>
-    <div class="video__details">
-      <div class="author">
-        <img
-          src="${snapshot.val().profile}"
-          alt=""
-        />
-      </div>
-      <div class="title">
-        <h3>${snapshot.val().title}</h3>
-        <a href="">${snapshot.val().username}</a>
-        <span>${snapshot.val().view}view • ${convertTime(snapshot.val().time)}</span>
-      </div>
-    </div>
-  </div>`
-
-});
+    firebase.database().ref('video').limitToLast(3).on('child_added',function(snapshot){
+        var s = snapshot.val();
+        videoElem(ul,snapshot.key,s.video,s.profile,s.title,s.username,s.time,s.view)
+    })
 }
-  firebase.database().ref('video').limitToLast(3).on('child_added',function(snapshot){
-
-    ul2.innerHTML += `          <div class="video"  data-id="${snapshot.key}" onclick="videoClicked(this)">
-  <div class="video__thumbnail" data-id="${snapshot.key}">
-  <video src="${snapshot.val().video}" class="video__thumbnail">
-  </div>
-  <div class="video__details">
-    <div class="author">
-      <img
-        src="${snapshot.val().profile}"
-        alt=""
-      />
-    </div>
-    <div class="title">
-      <h3>${snapshot.val().title}</h3>
-      <a href="">${snapshot.val().username}</a>
-      <span>${snapshot.val().view}view • ${convertTime(snapshot.val().time)}</span>
-    </div>
-  </div>
-</div>`
-  
-  });
-  firebase.database().ref('video').orderByChild('type').equalTo('comedy').limitToLast(6).on('child_added',function(snapshot){
-
-    ul3.innerHTML += `          <div class="video" data-id="${snapshot.key}"  onclick="videoClicked(this)">
-  <div class="video__thumbnail" data-id="${snapshot.key}">
-  <video src="${snapshot.val().video}" class="video__thumbnail">
-  </div>
-  <div class="video__details">
-    <div class="author">
-      <img
-        src="${snapshot.val().profile}"
-        alt=""
-      />
-    </div>
-    <div class="title">
-      <h3>${snapshot.val().title}</h3>
-      <a href="">${snapshot.val().username}</a>
-      <span>${snapshot.val().view}view • ${convertTime(snapshot.val().time)}</span>
-    </div>
-  </div>
-</div>`
-  
-  });
-  firebase.database().ref('video').orderByChild('type').equalTo('love').limitToLast(6).on('child_added',function(snapshot){
-
-    ul4.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
-  <div class="video__thumbnail" data-id="${snapshot.key}">
-  <video src="${snapshot.val().video}" class="video__thumbnail">
-  </div>
-  <div class="video__details">
-    <div class="author">
-      <img
-        src="${snapshot.val().profile}"
-        alt=""
-      />
-    </div>
-    <div class="title">
-      <h3>${snapshot.val().title}</h3>
-      <a href="">${snapshot.val().username}</a>
-      <span>${snapshot.val().view}view • ${convertTime(snapshot.val().time)}</span>
-    </div>
-  </div>
-</div>`
-  
-  });
-  firebase.database().ref('video').orderByChild('type').equalTo('sad').limitToLast(6).on('child_added',function(snapshot){
-
-    ul5.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
-  <div class="video__thumbnail" data-id="${snapshot.key}">
-  <video src="${snapshot.val().video}" class="video__thumbnail">
-  </div>
-  <div class="video__details">
-    <div class="author">
-      <img
-        src="${snapshot.val().profile}"
-        alt=""
-      />
-    </div>
-    <div class="title">
-      <h3>${snapshot.val().title}</h3>
-      <a href="">${snapshot.val().username}</a>
-      <span>${snapshot.val().view}view • ${convertTime(snapshot.val().time)}</span>
-    </div>
-  </div>
-</div>`
-  
-  });
+// Latest video
+firebase.database().ref('video').limitToLast(3).on('child_added',function(snapshot){
+var s = snapshot.val();
+videoElem(ul2,snapshot.key,s.video,s.profile,s.title,s.username,s.time,s.view)
+})//TYpe Comedy Video
+firebase.database().ref('video').orderByChild('type').equalTo('comedy').limitToLast(6).on('child_added',function(snapshot){
+var s = snapshot.val();
+videoElem(ul3,snapshot.key,s.video,s.profile,s.title,s.username,s.time,s.view)
+})//TYpe Comedy love
+firebase.database().ref('video').orderByChild('type').equalTo('love').limitToLast(6).on('child_added',function(snapshot){
+var s = snapshot.val();
+videoElem(ul4,snapshot.key,s.video,s.profile,s.title,s.username,s.time,s.view);
+})//TYpe Comedy sad
+firebase.database().ref('video').orderByChild('type').equalTo('sad').limitToLast(6).on('child_added',function(snapshot){
+var s = snapshot.val();
+videoElem(ul5,snapshot.key,s.video,s.profile,s.title,s.username,s.time,s.view);
+})
 }
 //----------------user if loggined---------------------//
 auth.onAuthStateChanged(function(user){
@@ -223,25 +138,8 @@ DomEvent('.videos','scroll',function(){
     var ul = get('.videos__container');
     if(_x < 1){
       firebase.database().ref('video').limitToLast(3).on('child_added',function(snapshot){
-        ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
-      <div class="video__thumbnail" data-id="${snapshot.key}">
-      <video src="${snapshot.val().video}" class="video__thumbnail">
-      </div>
-      <div class="video__details">
-        <div class="author">
-          <img
-            src="${snapshot.val().profile}"
-            alt=""
-          />
-        </div>
-        <div class="title">
-          <h3>${snapshot.val().title}</h3>
-          <a href="">${snapshot.val().username}</a>
-          <span>${snapshot.val().view}view • ${convertTime(snapshot.val().time)}</span>
-        </div>
-      </div>
-    </div>`
-      
+        var s = snapshot.val();
+        videoElem(ul,snapshot.key,s.video,s.profile,s.title,s.username,s.time,s.view)
       });
       _x++;
     }
@@ -315,25 +213,8 @@ function trend(views) {
     c(i);
     let pkey = views[i].key;
     firebase.database().ref('video/'+pkey).once('value').then(function (snapshot){
-      ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
-      <div class="video__thumbnail" data-id="${snapshot.key}">
-      <video src="${snapshot.val().video}" class="video__thumbnail">
-      </div>
-      <div class="video__details">
-        <div class="author">
-          <img
-            src="${snapshot.val().profile}"
-            alt=""
-          />
-        </div>
-        <div class="title">
-          <h3>${snapshot.val().title}</h3>
-          <a href="">${snapshot.val().username}</a>
-          <span>${snapshot.val().view}view • ${convertTime(snapshot.val().time)}</span>
-        </div>
-      </div>
-    </div>`
-      
+      var s = snapshot.val();
+      videoElem(ul,snapshot.key,s.video,s.profile,s.title,s.username,s.time,s.view)
            })
                                               }
 }
