@@ -210,7 +210,7 @@ if(value){islogin=true}else{islogin=false}
 //-------VideoClicked ---Go TO Video Page-------------------//
 function videoClicked(vid){
   var id = vid.getAttribute("data-id");
-  window.location.href = '/Video-Point/video view/video.html?page='+id;
+  window.location.href = 'video view/video.html?page='+id;
 }
 
 //---------onscrolled to bottom load more video----------///

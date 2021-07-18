@@ -502,3 +502,7 @@ function hoverout($) {
   var tvideo = document.getElementById(id);
   tvideo.pause();
 }
+//-----Click Home -----------//
+DomEvent('#home', 'click',function(){
+  window.location.replace('../index.html')
+})
