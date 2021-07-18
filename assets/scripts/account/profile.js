@@ -16,10 +16,6 @@ const auth = firebase.auth();
 var c = console.log;
 var userid , name1;
 userid=localStorage.getItem("uid");
-c(userid);
-var rand1 = Math.floor((Math.random() * 99999999999) + 1);
-var rand = Math.floor((Math.random() * rand1) + 1);
-c(rand);
 var myVideo = [];
 var  mapName = [];
 var  mapProfile = [];
@@ -203,7 +199,7 @@ function watchLaterVideos() {
                    $profile  = mapProfile[d].profile;
               }
             }
-      ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onmouseover="del()" onclick="videoClicked(this)">
+      ul.innerHTML += `          <div class="video" data-id="${snapshot.key}"  onclick="videoClicked(this)">
       <div class="video__thumbnail" data-id="${snapshot.key}">
       <video src="${snapshot.val().video}" class="video__thumbnail">
       </div>
@@ -250,12 +246,7 @@ function  getusersDetail() {
             
   });
 }
-function del() {
-  r = confirm("Do you Want To Delete This Saved Later Video");
-  if(r == true){
-    a('deleted');
-  }
-}
+
 getusersDetail();
 
 
