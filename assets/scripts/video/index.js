@@ -169,7 +169,7 @@ function pause_vid()
  get('#video_time').innerText = time2.minutes+"m : "+time2.seconds+"s"  +"/"+time.minutes+"m : "+time.seconds+"s";
  if($_x <= 0){
   if(player.currentTime >= player.duration/2){
-    firebase.database().ref("video/"+val).once('value').then(function (snapshot) {
+    firebase.database().ref("video/"+key).once('value').then(function (snapshot) {
     viewCount(player.duration,  snapshot.val().view, snapshot.val().key)
     });
     $_x++;
