@@ -16,7 +16,6 @@ function show(element){get(element).style.removeProperty('flex');}
 function DomEvent(element, type,  output) {get(element).addEventListener(type,output);}
 function rand(val) {return Math.floor((Math.random() * val)+1)}
 function toggle(val){
-  c(get(val).style.display)
   if( get(val).style.display == 'block'){ 
     hide(val)
   }else if(get(val).style.display == 'none'){
@@ -86,7 +85,6 @@ function copytext(text) {
   input.select();
   var resultCopy = document.execCommand("copy");
   document.body.removeChild(input);
-  c('copied');
   return resultCopy;
 }
 function startVideo(video){
@@ -131,14 +129,11 @@ function convertTime(time){
     return output;
 }
 function viewCount(time , view , key){
-  let x = time/2;
-  timeout(function(){
     firebase.database().ref("video/"+key).update({
       "view":++view
     })
     firebase.database().ref("views/"+key).set({
       "view":++view,
       'key':key
-    })
-  },x)
+    });
 }

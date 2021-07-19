@@ -11,10 +11,7 @@ auth.onAuthStateChanged(function(user){
      var  userid = user.uid;
               localStorage.setItem("uid",userid);
          islogin = true;
-         c("Registered User")
-
          firebase.database().ref("users/"+userid).once('value').then(function (snapshot) {
-         
          get('#comment_profile').src = snapshot.val().profile;
          Username = snapshot.val().name;
          Profile = snapshot.val().profile;
@@ -22,12 +19,18 @@ auth.onAuthStateChanged(function(user){
         })
   }else{
     islogin = false;
-      console.log("Anonymous User");
       //no user is signed in
   }
   
 });
+// --------Getting Url Parameeters
+var url = new URL(window.location.href);
+var c2 = url.searchParams.get("page");
+if(c2 === ""){
 
+}else{
+key = c2;
+}
 fuserid = localStorage.getItem('uid');
 // -------------------------------------VIDEO PROPERTIES------------------------------------------------//
 var player , btnPlayPause , btnMute , progressBar , volumeBar; 
@@ -40,9 +43,6 @@ var i = setInterval(function() {
 	if(player.readyState > 0) {
 		var minutes = parseInt(player.duration / 60, 10);
 		var seconds = player.duration % 60;
-console.log(Math.round(minutes),"min",Math.round(seconds),"sec")
-		// (Put the minutes and seconds in the display)
-
 		clearInterval(i);
 	}
 }, 200);
@@ -73,7 +73,6 @@ player = document.getElementById('video-element');
 function initializeVideo() {
   const time = formatTime( Math.round(player.duration));
   const time2 = formatTime( Math.round(player.currentTime));
-
   get('#video_time').innerText = time2.minutes+"m : "+time2.seconds+"s"  +"/"+time.minutes+"m : "+time.seconds+"s";
   player.play();
   changeButtonType(btnPlayPause, 'pause');
@@ -89,7 +88,8 @@ function initializeVideo() {
 	player.addEventListener('ended', function() { this.play(); }, false);	
   
   progressBar.addEventListener("click", seek);
-
+  
+  var $_x = 0;
   function seek(e) {
       var percent = e.offsetX / this.offsetWidth;
       player.currentTime = percent * player.duration;
@@ -166,9 +166,16 @@ function pause_vid()
   	progressBar.innerHTML = percentage + '% played';
     const time = formatTime( Math.round(player.duration));
     const time2 = formatTime( Math.round(player.currentTime));
-
-    get('#video_time').innerText = time2.minutes+"m : "+time2.seconds+"s"  +"/"+time.minutes+"m : "+time.seconds+"s";
+ get('#video_time').innerText = time2.minutes+"m : "+time2.seconds+"s"  +"/"+time.minutes+"m : "+time.seconds+"s";
+ if($_x <= 0){
+  if(player.currentTime >= player.duration/2){
+    firebase.database().ref("video/"+val).once('value').then(function (snapshot) {
+    viewCount(player.duration,  snapshot.val().view, snapshot.val().key)
+    });
+    $_x++;
   }
+}
+}
   
   // Updates a button's title, innerHTML and CSS class
   function changeButtonType(btn, value) {
@@ -232,14 +239,7 @@ function pause_vid()
 //----------------X----V-I-D-E-O--L-O-G-I-C----E-N-D---X----
 
 
-// --------Getting Url Parameeters
-var url = new URL(window.location.href);
-var c2 = url.searchParams.get("page");
-if(c2 === ""){
 
-}else{
-key = c2;
-}
 
   //-----------------Onshare CLick DropDownList---------------//
   function dropDownList() {
@@ -261,7 +261,7 @@ key = c2;
   //--------Get Video Share Link
   function sharelink(){
     var url2 = new URL(window.location.href);
-    copytext(url2+key);
+    copytext(url2);
   }
 
 //------------------DATABASE WORKING STARTED---------------------------------------------//
@@ -394,8 +394,7 @@ function firebaseGetData(val){
   get("#tab_icon").href = snapshot.val().profile;
   get('#date').innerHTML = convertTime(snapshot.val().time);
   get('#des').innerHTML = snapshot.val().des;
-  viewCount( snapshot.val().VideoMillisec,  snapshot.val().view, snapshot.val().key)
-  likedList(snapshot.val().key)
+   likedList(snapshot.val().key)
   });
 }
 //------User Click on Comment heading to Toggle------//
@@ -426,7 +425,7 @@ DomEvent('#login','click',function()
   if(islogin){
      a('Already Logged in');
   }else{
-    window.location.href = '/Video-Point/Account/signup.html';
+    window.location.href = 'Account/signup.html';
   }
 })
 
@@ -435,7 +434,6 @@ function loadComment(post){
   var item = get('.comment_box');
   item.innerHTML += "";
   firebase.database().ref('commentDB/'+post).on('child_added',function(snapshot){
-    c("comment load Running"+key);
   item.innerHTML += ` <div class="video_recieved_comment">
   <div class="comment_logo">
     <img src="${snapshot.val().profile}" alt="not found" width="40px" height="40px" >
@@ -485,18 +483,14 @@ DomEvent('#watchLater','click',function () {
 //-------Desxcription------Toggle------//
 DomEvent('#Description','click',function () {
    toggle('#des')
-
 })
 function hover($) {
-  c("hover on video")
   var id;
   id = $.getAttribute('id');
   var tvideo = document.getElementById(id);
-  c(tvideo);
   tvideo.play();
 }
 function hoverout($) {
-  c("hoverout ")
   var id;
   id = $.getAttribute('id');
   var tvideo = document.getElementById(id);
