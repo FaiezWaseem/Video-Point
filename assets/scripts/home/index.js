@@ -209,7 +209,7 @@ firebase.database().ref('views').on('child_added',function(snapshot){
 function trend(views) {
   var ul = get('#trending');
   ul.innerHTML= "";
-  for(let i = 0 ; i <= views.length-1; i++){
+  for(let i = 0 ; i <= 6; i++){
     c(i);
     let pkey = views[i].key;
     firebase.database().ref('video/'+pkey).once('value').then(function (snapshot){
@@ -254,4 +254,10 @@ DomEvent('#logout','click',function()
   }else{
     a("You are not signed in\nHow can you SignOut")
   }
+})
+firebase.database().ref('video').on('child_added',function(snapshot){
+var datalist = get('#searchs');
+datalist.innerHTML += `
+<option value='${snapshot.val().title}' video-type='${snapshot.val().type}' data-id='${snapshot.key}'>
+`
 })
