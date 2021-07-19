@@ -313,12 +313,10 @@ firebase.database().ref('video/'+id+'/liked/').on('child_added',function(snapsho
   }
   if(islogin){
   if(snapshot.key === localStorage.getItem("uid")){
-      console.log("my liked post");
       myliked = true;
       document.getElementById('font_like').textContent = "favorite"; 
   }else{
     myliked= false;
-    console.log("not liked");
     document.getElementById('font_like').textContent="favorite_border";
   }}
 })
@@ -482,6 +480,7 @@ DomEvent('#watchLater','click',function () {
 
 //-------Desxcription------Toggle------//
 DomEvent('#Description','click',function () {
+  console.log('toggle')
    toggle('#des')
 })
 function hover($) {

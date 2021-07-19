@@ -226,7 +226,7 @@ function videoClicked(vid){
   var id = vid.getAttribute("data-id");
   //  c(id);
   // localStorage.setItem('key',id);
-  window.location.href = 'video view/video.html?page='+id;
+  window.location.href = '../video view/video.html?page='+id;
   }
 function  getusersDetail() {
   firebase.database().ref('users').on('child_added',function(snapshot){
