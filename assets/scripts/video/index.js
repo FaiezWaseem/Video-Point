@@ -285,6 +285,13 @@ firebase.database().ref('video').limitToLast(7).on('child_added',function(snapsh
 function clickvid(key2){
   id = key2.getAttribute('data-id');
   key = id;
+  var queryParams = new URLSearchParams(window.location.search);
+ 
+// Set new or modify existing parameter value.
+queryParams.set("page", key);
+ 
+// Replace current querystring with the new one.
+history.replaceState(null, null, "?"+queryParams.toString());
   firebaseGetData(key);
   loadComment(key);
 }
