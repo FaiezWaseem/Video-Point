@@ -59,18 +59,18 @@
             <i class="fas fa-images"></i>
           </div>
       
-          <span class="header">Drag & Drop</span>
-          <span class="header">or <span class="button">browse</span></span>
+         
+          <span class="header"><span class="button">browse</span></span>
           <input type="file" hidden />
           <span class="support">Supports: mp4</span>
         </div>
       </div>
       <div class="video-box" style="display: none;">
-        <video  id="video"  autoplay controls loop   width="500px" height="250px">
-        </video>
+    
         <div class="box-shadow">
             <input type="text"  id="vidtitle" placeholder="Enter Video Title" required>
-            <input type="text"  id="des" placeholder="Enter Video Description" required>
+            <textarea  cols="30" rows="10" id="des" placeholder="Enter Video Description" required></textarea>
+          
             <label for="type">Choose Video type :</label>
                 <select id="type" name="cars">
                   <option value="comedy">Comedy</option>
@@ -82,14 +82,7 @@
                   <option value="love">love</option>
                   <option value="gaming">gaming</option>
                 </select>
-                <div id="input-upload-file" class="box-shadow">
-                  <span></span>
-                  <pre id="infos"></pre>
-                  <button onclick="uploadVideo()"id="Upload_btn">Upload</button>
-                  <ul id="skill">
-                      <li><span class="bar jquery"></span><h3>Uploading</h3></li>
-                    </ul>
-                </div>
+                <button onclick="uploadVideo()"id="Upload_btn">Upload</button>
                 </div>
               </div>
     </div>
@@ -103,7 +96,13 @@
 
 </div>
 </div>
-<div class="help" style="display: none;"></div>
+<div class="Loading-Modal">
+  <div>
+    <img src="../assets/images/71814-loading-dots.gif" alt="Loading">
+    <h1>Uploading Please Wait ...</h1>
+    <span>Please Do not Close The Window While Uploading... </span>
+
+  </div>
 </div>
 
 <!-- Scripts -->

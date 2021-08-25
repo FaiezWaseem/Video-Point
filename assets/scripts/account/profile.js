@@ -8,7 +8,7 @@ var upload = document.getElementById('upload');
 var nameS = document.getElementById('uname');
 var emailS = document.getElementById('uemail');
 var myprog = document.getElementById('myProgress');
-var i = 0;
+var i = 0 , fr;
 var img , imgURL;
 var files = [] , fileName;
 var reader;
@@ -28,7 +28,7 @@ var thumb;
 var videoPicked;
 var videoTitle;
 var title , des , type , emp=false;
-
+var thumbnail_url  , video_url
 
 
 firebase.database().ref("users/"+uid).once('value').then(function (snapshot) {
@@ -167,7 +167,7 @@ function myVideos(){
       }
         ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
         <div class="video__thumbnail" data-id="${snapshot.key}">
-        <video src="${snapshot.val().video}" class="video__thumbnail">
+        <img src="${snapshot.val().thumbnail}" class="video__thumbnail">
         </div>
         <div class="video__details">
           <div class="author">
@@ -201,7 +201,7 @@ function watchLaterVideos() {
             }
       ul.innerHTML += `          <div class="video" data-id="${snapshot.key}"  onclick="videoClicked(this)">
       <div class="video__thumbnail" data-id="${snapshot.key}">
-      <video src="${snapshot.val().video}" class="video__thumbnail">
+      <img src="${snapshot.val().thumbnail}" class="video__thumbnail">
       </div>
       <div class="video__details">
         <div class="author">
@@ -271,89 +271,31 @@ getusersDetail();
   let input = get('input');
   
   let file; 
-  // when file is inside drag area
-dropArea.addEventListener('dragover', (event) => {
-  event.preventDefault();
-  dropArea.classList.add('active');
-  dragText.textContent = 'Release to Upload';
-  // console.log('File is inside the drag area');
-});
-
-// when file leave the drag area
-dropArea.addEventListener('dragleave', () => {
-  dropArea.classList.remove('active');
-  // console.log('File left the drag area');
-  dragText.textContent = 'Drag & Drop';
-});
-
-// when file is dropped
-dropArea.addEventListener('drop', (event) => {
-  event.preventDefault();
-  // console.log('File is dropped in drag area');
-  files = event.dataTransfer.files[0]; // grab single file even of user selects multiple files
-  myVideo.push(files);
-  videoPicked = files;
-  displayFile();
-});
-
-function displayFile() {
-  myVideo.push(files[0]);
-  let fileType = files.type;
-  console.log(fileType);
-var video = get('#video');
-  let validExtensions = ['video/mp4'];
-
-  if (validExtensions.includes(fileType)) {
-    // console.log('This is an image file');
-    let fileReader = new FileReader();
-
-    fileReader.onload = () => {
-      let fileURL = fileReader.result;
-      // console.log(fileURL);
-      get('.video-box').style.display = 'block';
-      get('#upload_container').style.display = 'none';
-    get('#video').src = fileURL;   
-    get('#video').onloadedmetadata = function() {
-      videoMilliSec = video.duration;
-      getFileinfo();
-    }
-
-    };
-
-    fileReader.readAsDataURL(files);
-
-  } else {
-    alert('This is not a Video File');
-    dropArea.classList.remove('active');
-  }
-}
 button.onclick = () => {
   input.click();
 };
 
 // when browse
-input.addEventListener('change', function () {
-  files = this.files[0];
-  myVideo.push(this.files[0]);
-  videoPicked = files[0];
-  dropArea.classList.add('active');
-  displayFile();
+input.addEventListener('change', function (e) {
+  dropArea.classList.add('active');   
+    var video = get('#video');
+  let validExtensions = ['video/mp4'];
+// if file is  a mp4 video  
+       if (validExtensions.includes(e.target.files[0].type)) {
+
+    get('#upload_container').style.display = "none"
+    get('.video-box').style.display = "block"
+        files = e.target.files;
+        fileName = e.target.files[0].name;
+        reader = new FileReader();
+        reader.readAsArrayBuffer(files[0]);
+        reader.onload = f => {
+    getVideoCover(files[0] , 1.5)
+            fr = f;
+           }
+       }    
+       input.click();
 });
-
-
-function getFileinfo() {
-  var infos = get('#infos');
-  video_Time = videoDuration(video.duration);
-  fileSize = FileSize(myVideo[0].size);
-  videoTitle = myVideo[0].name;
-  isSizeBig(videoMilliSec);
-  c("Duration in Millisec :"+videoMilliSec)
-  c("Duration in Time :"+video_Time)
-  c("File Size :"+fileSize)
-  c("File name :"+videoTitle)
-  infos.innerHTML =  videoTitle + "  "+video_Time +"  "+ fileSize;
-
-}
 
 function isSizeBig(size){
   if(size > 53000000){
@@ -366,38 +308,23 @@ function uploadVideo() {
   if(emp){dbUpload()}
 }
 function dbUpload() {
-    //firebase cloud storage
- var uploadTask = firebase.storage().ref('vid/'+rand+videoTitle).put(files);
+  try{
 
- uploadTask.on('state_changed', function(snapshot){
-      var progress = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
-   c(progress);
-get('.jquery').style.width = Math.floor(progress) +"%";
- },
- //error catching
- function(error){
-    a(error);
- },
-
- //on upload success
- function(){
-     uploadTask.snapshot.ref.getDownloadURL().then(function(url){
-   DBUpload(url);
-  });
-  //realtime db
-   alert("Upload Successfull");
- }
- 
- );
+    uploadToDrive(fr , files[0]);
+  }catch(err){
+   console.warn(err)
+   get('.Loading-Modal').style.display = "none"
+  }
 }
 function DBUpload(url){
   // Get a key for a new Post.
   var t = getTimeinMilli();
 var newPostKey = firebase.database().ref().child('video').push().key;
   firebase.database().ref("video/"+newPostKey).set({
-    "video":url,
+    "video":video_url,
+    "thumbnail": thumbnail_url,
     "title": title,
-    "videoSize": fileSize,
+    "videoSize": files[0].size,
     "VideoMillisec": videoMilliSec,
     "duration":video_Time,
     "view": "0",
@@ -412,9 +339,10 @@ var newPostKey = firebase.database().ref().child('video').push().key;
 
   })
   firebase.database().ref("Userposts/"+uid+"/"+newPostKey).set({
-    "video":url,
+    "video":video_url,
+    "thumbnail": thumbnail_url,
     "title": title,
-    "videoSize": fileSize,
+    "videoSize": files[0].size,
     "VideoMillisec": videoMilliSec,
     "duration":video_Time,
     "view": "0",
@@ -428,7 +356,95 @@ var newPostKey = firebase.database().ref().child('video').push().key;
      "profile":avatar
 
   })
+  get('.Loading-Modal').style.display = "none"
   get('.video-box').style.width = 'none';
   get('.UploadFile').style.width = 'block';
+}
+function getVideoCover(file, seekTo = 0.0) {
+  console.log("getting video cover for file");
+  get('.Loading-Modal').style.display = "grid"
+      // load the file to a video player
+      const videoPlayer = document.createElement('video');
+      videoPlayer.setAttribute('src', URL.createObjectURL(file));
+      videoPlayer.load();
+      videoPlayer.addEventListener('error', (ex) => {
+          console.error("error when loading video file", ex);
+      });
+      // load metadata of the video to get video duration and dimensions
+      videoPlayer.addEventListener('loadedmetadata', () => {
+          // seek to user defined timestamp (in seconds) if possible
+          if (videoPlayer.duration < seekTo) {
+              console.error("video is too short.");
+              return;
+          }
+          // delay seeking or else 'seeked' event won't fire on Safari
+          setTimeout(() => {
+            videoPlayer.currentTime = seekTo;
+          }, 200);
+          // extract video thumbnail once seeking is complete
+          videoPlayer.addEventListener('seeked', () => {
+            videoMilliSec    =  videoPlayer.duration ;
+            video_Time = videoPlayer.duration;
+              console.log('video is now paused at %ss.', seekTo);
+              const canvas = document.createElement("canvas");
+              canvas.width = videoPlayer.videoWidth;
+              canvas.height = videoPlayer.videoHeight;
+              const ctx = canvas.getContext("2d");
+              ctx.drawImage(videoPlayer, 0, 0, canvas.width, canvas.height);
+              ctx.canvas.toBlob(
+                blob => {
+                  thumb = canvas.toDataURL("image/jpeg");
+                    return   thumb = uploadThumbnail(thumb);
+                  },
+                  "image/jpeg",
+                  0.75 /* quality */
+              );
+          });
+      });
+
+}
+function uploadThumbnail(file){
+  const id = 'AKfycbwVJszGTGgfWl5Pexu8YrG010DMcJQVaDmyYqivoedIvm83ZTmi1rAdmKbGD6h8r5bu1g'
+  const url = `https://script.google.com/macros/s/${id}/exec`; 
+  console.log('uploading Thumbnail')
+  const qs = new URLSearchParams({filename:`img${rand(100)+rand(789)}`, mimeType: 'image/jpeg'});
+  fetch(`${url}?${qs}`, {
+method: "POST",
+body: JSON.stringify(file.substr(file.indexOf('base64,')+7))})
+  .then(res => res.json())
+  .then(e => {
+    console.log('Thumbnail Uploaded')
+    thumbnail_url = ` https://drive.google.com/uc?export=download&id=${e.fileId}`
+    get('.Loading-Modal').style.display = "none"
+    return thumbnail_url;
+  })
+  .catch(err =>{
+    get('.Loading-Modal').style.display = "none"
+       console.error(err)
+       alert('Uploading Error \n ' + JSON.stringify(err))
+       return err;
+  })
+}
+function uploadToDrive(f , file){
+  get('.Loading-Modal').style.display = "grid"
+  const id = 'AKfycbxfwq0PGdYnf6LYsFj9Rog5veT00jukFHZPL_l5WipFH_8ApxLgoiEtSGfpsGA2NNGc'
+  const url = `https://script.google.com/macros/s/${id}/exec`; 
+  console.log('uploading Video')
+  const qs = new URLSearchParams({filename: file.name, mimeType: file.type});
+  fetch(`${url}?${qs}`, {
+method: "POST",
+body: JSON.stringify([...new Int8Array(f.target.result)])})
+  .then(res => res.json())
+  .then(e => {
+     console.log('Video Uploaded')
+       video_url = ` https://drive.google.com/uc?export=download&id=${e.fileId}`
+     console.log("Thuhmnail Url : " + thumbnail_url + "\n Video Url" + video_url)
+     DBUpload(video_url) ; 
+  })
+  .catch(err =>{
+    get('.Loading-Modal').style.display = "none"
+      console.error(err)
+       alert('Uploading Error \n ' + JSON.stringify(err))
+  })
 }
 //-----------------------File Upload finished ---------------------------// 

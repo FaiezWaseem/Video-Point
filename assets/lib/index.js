@@ -137,3 +137,4 @@ function viewCount(time , view , key){
       'key':key
     });
 }
+

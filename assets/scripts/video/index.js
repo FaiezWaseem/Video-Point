@@ -272,7 +272,7 @@ firebase.database().ref('video').limitToLast(7).on('child_added',function(snapsh
   let ul = get('.item2');
   ul.innerHTML += `             <div class="box" data-id="${snapshot.key}" onclick="clickvid(this)">
   <div class="video">
-      <video src="${snapshot.val().video}" id="${snapshot.key}" onmouseover="hover(this);" onmouseout="hoverout(this)">
+      <video src="" poster="${snapshot.val().thumbnail}" id="${snapshot.key}" onmouseover="hover(this);" onmouseout="hoverout(this)">
   </div>
  <div class="v-details">
       <h2 id="v-details">${snapshot.val().title}</h2>
