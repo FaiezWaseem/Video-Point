@@ -165,9 +165,12 @@ function myVideos(){
              $profile  = mapProfile[d].profile;
         }
       }
+      const drive = "https://drive.google.com/thumbnail?id="
+      const url = snapshot.val().thumbnail;
+      const new_url = url.replace('https://drive.google.com/uc?export=download&id=',drive) 
         ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
         <div class="video__thumbnail" data-id="${snapshot.key}">
-        <img src="${snapshot.val().thumbnail}" class="video__thumbnail">
+        <img src="${new_url}" class="video__thumbnail">
         </div>
         <div class="video__details">
           <div class="author">

@@ -48,9 +48,12 @@ DomEvent('#account','click',function()
 //------Loading Videos--------//
 getVideos();
 function videoElem(ul,key,vid,profile,title,name,time,view){
+  const drive = "https://drive.google.com/thumbnail?id="
+const url = vid;
+const new_url = url.replace('https://drive.google.com/uc?export=download&id=',drive) 
   ul.innerHTML += `          <div class="video" data-id="${key}"  onclick="vidClicked(this)">
   <div class="video__thumbnail" data-id="${key}">
-  <img src="${vid}" class="video__thumbnail" alt="thumbnail couldn't Load  Quota Exceeded, check again in an hour">
+  <img src="${new_url}" class="video__thumbnail" alt="thumbnail couldn't Load  Quota Exceeded, check again in an hour">
   </div>
   <div class="video__details">
     <div class="author">

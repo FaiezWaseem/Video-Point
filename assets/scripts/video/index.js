@@ -270,9 +270,12 @@ firebaseGetData(key);
 //------Loading Video Recommendation
 firebase.database().ref('video').limitToLast(7).on('child_added',function(snapshot){
   let ul = get('.item2');
+  const drive = "https://drive.google.com/thumbnail?id="
+  const url = snapshot.val().thumbnail;
+  const new_url = url.replace('https://drive.google.com/uc?export=download&id=',drive) 
   ul.innerHTML += `             <div class="box" data-id="${snapshot.key}" onclick="clickvid(this)">
   <div class="video">
-      <video src="" poster="${snapshot.val().thumbnail}" id="${snapshot.key}" onmouseover="hover(this);" onmouseout="hoverout(this)">
+      <video src="" poster="${new_url}" id="${snapshot.key}" onmouseover="hover(this);" onmouseout="hoverout(this)">
   </div>
  <div class="v-details">
       <h2 id="v-details">${snapshot.val().title}</h2>
