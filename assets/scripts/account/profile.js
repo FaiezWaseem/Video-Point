@@ -30,7 +30,7 @@ var videoTitle;
 var title , des , type , emp=false;
 var thumbnail_url  , video_url
 
-
+// Load Profile detail Once
 firebase.database().ref("users/"+uid).once('value').then(function (snapshot) {
     Username = snapshot.val().name;
     avatar = snapshot.val().profile;
@@ -45,6 +45,7 @@ c( get('#uname').textContent)
   function GoTOHome(){
     window.location.replace("../index.html");
 }
+// update new profile
 function editClick(){
 
     if(i == 0){
@@ -60,7 +61,7 @@ function editClick(){
        
     }
 }
-//-------Selection Process -----------------//
+//-------Selection profile pick  Process -----------------//
 select.onclick = function(e){
     var  input = document.createElement('input');
     input.type = 'file';
@@ -86,7 +87,7 @@ select.onclick = function(e){
 
 //----------UPLOAD PROCESS-----------------//
 
-
+//----profile upload----------------------//
 upload.onclick = function (){
     myprog.classList.remove("none");
    img = "avatar";
@@ -285,16 +286,16 @@ input.addEventListener('change', function (e) {
   let validExtensions = ['video/mp4'];
 // if file is  a mp4 video  
        if (validExtensions.includes(e.target.files[0].type)) {
-
+           fr = e;
     get('#upload_container').style.display = "none"
-    get('.video-box').style.display = "block"
+    get('.video-box').style.display = "grid"
         files = e.target.files;
         fileName = e.target.files[0].name;
         reader = new FileReader();
         reader.readAsArrayBuffer(files[0]);
         reader.onload = f => {
     getVideoCover(files[0] , 1.5)
-            fr = f;
+            
            }
        }    
        input.click();
@@ -313,7 +314,7 @@ function uploadVideo() {
 function dbUpload() {
   try{
 
-    uploadToDrive(fr , files[0]);
+    uploadToDrive2(files[0])
   }catch(err){
    console.warn(err)
    get('.Loading-Modal').style.display = "none"
@@ -428,26 +429,114 @@ body: JSON.stringify(file.substr(file.indexOf('base64,')+7))})
        return err;
   })
 }
-function uploadToDrive(f , file){
-  get('.Loading-Modal').style.display = "grid"
-  const id = 'AKfycbxfwq0PGdYnf6LYsFj9Rog5veT00jukFHZPL_l5WipFH_8ApxLgoiEtSGfpsGA2NNGc'
-  const url = `https://script.google.com/macros/s/${id}/exec`; 
-  console.log('uploading Video')
-  const qs = new URLSearchParams({filename: file.name, mimeType: file.type});
-  fetch(`${url}?${qs}`, {
-method: "POST",
-body: JSON.stringify([...new Int8Array(f.target.result)])})
-  .then(res => res.json())
-  .then(e => {
-     console.log('Video Uploaded')
-       video_url = ` https://drive.google.com/uc?export=download&id=${e.fileId}`
-     console.log("Thuhmnail Url : " + thumbnail_url + "\n Video Url" + video_url)
-     DBUpload(video_url) ; 
-  })
-  .catch(err =>{
-    get('.Loading-Modal').style.display = "none"
-      console.error(err)
-       alert('Uploading Error \n ' + JSON.stringify(err))
-  })
+
+//---------Drive Upload Methods & api needs---------//
+var drive_accessToken;
+getAccessToken();
+function getAccessToken(){
+    const id = 'AKfycbz19inbya5CcwM48qEXSQk4VssWSQNCcvcrmUBIk6QVgGsUoOBi2t9Cjn7Cy_6UnrW9'
+    const url = `https://script.google.com/macros/s/${id}/exec`; 
+    const qs = new URLSearchParams({filename: 'xx', mimeType: 'xxx'});
+    fetch(`${url}?${qs}`, {
+ method: "POST",
+  body: '' })
+    .then(res => res.json())
+    .then(e => {
+      drive_accessToken = e.token;
+    })
+    .catch(err =>{
+    
+         console.log(err)
+    
+    })
+}
+function getFileShaingPermission(fid){
+    
+    const id = 'AKfycbyb3Z3EwstJO5cKa8k5cIMglSRo4kg2mf1VVDdL8-evCQ4M063HPLUlw_L7f9S2JE4'
+    const url = `https://script.google.com/macros/s/${id}/exec`; 
+    const qs = new URLSearchParams({id: fid});
+    fetch(`${url}?${qs}`, {
+        method: "POST",
+         body: '' })
+           .then(res => res.json())
+           .then(e => {
+             console.log(e)
+           })
+           .catch(err =>{
+           
+                console.log(err)
+           
+           })
+}
+function uploadToDrive2($){
+  const accessToken = drive_accessToken;
+   run($)
+  
+    function run(obj) {
+      const file = obj;
+      if (file.name != "") {
+        let fr = new FileReader();
+        fr.fileName = file.name;
+        fr.fileSize = file.size;
+        fr.fileType = file.type;
+        fr.readAsArrayBuffer(file);
+        fr.onload = resumableUpload;
+        
+      }
+    }
+
+    function resumableUpload(e) {
+      get('.Loading-Modal').style.display = "grid"
+     c('Message', 'Initializing');
+    const f = e.target;
+      const resource = {
+        fileName: f.fileName,
+        fileSize: f.fileSize,
+        fileType: f.fileType,
+        fileBuffer: f.result,
+        accessToken: accessToken
+      };
+      const ru = new ResumableUploadToGoogleDrive();
+      ru.Do(resource, function(res, err) {
+        if (err) {
+            alert('Unable To Upload : \n' +JSON.stringify(err))
+            console.log("UPload Failed \n"+err);
+            get('.Loading-Modal').style.display = "none"  
+          return;
+        }
+        try{
+            //Upload Success
+          
+          video_url = ` https://drive.google.com/uc?export=download&id=${res.result.id}`
+            getFileShaingPermission(res.result.id)
+            DBUpload(video_url)
+            get('.Loading-Modal').style.display = "none"
+            document.querySelector('.Loading-Modal h1').innerText = 'Initializing Please Wait ...'
+            document.querySelector('.video-box').style.display = 'none'
+            document.querySelector('#upload_container').style.display = 'block'
+            document.querySelector('#vidtitle').value = ''
+            document.querySelector('#des').value = ''
+        }catch(err){
+            if(res.status === "Uploading"){
+              
+              console.log(res.progressByte.current)
+              console.log(res.progressByte.total)
+            }
+   
+          }
+          let msg = "";
+          if (res.status == "Uploading") {
+          
+          msg =
+            Math.round(
+              (res.progressNumber.current / res.progressNumber.end) * 100
+              ) + "%";
+              document.querySelector('.Loading-Modal h1').innerText = 'Uploaded : '+msg
+        } else {
+          msg = res.status;
+        }
+       
+      });
+    }
 }
 //-----------------------File Upload finished ---------------------------// 

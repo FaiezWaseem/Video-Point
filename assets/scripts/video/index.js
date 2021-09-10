@@ -364,30 +364,30 @@ function CheckUnLiked(){
 /*----------Check If User Scrolled to bottom
 -----------and Load More Videos
 */
-var element = get('.container')
-var _x = 0
-DomEvent('.container','scroll',function(){
-  if (element.scrollHeight - element.scrollTop === element.clientHeight)
-      {
-        if(_x < 1){
-          firebase.database().ref('video').limitToFirst(7).on('child_added',function(snapshot){
-            let ul = get('.item2');
-            ul.innerHTML += `<div class="box" data-id="${snapshot.key}" onclick="clickvid(this)">
-            <div class="video">
-                <video src="${snapshot.val().video} id="${snapshot.key}" onmouseover="hover(this);" onmouseout="hoverout($)" >
-            </div>
-           <div class="v-details">
-                <h2 id="v-details">${snapshot.val().title}</h2>
-                <h3 id="v-details">${snapshot.val().username}</h3>
-            </div>
-          </div>`
-          })
-          _x++;
-        }
+// var element = get('.container')
+// var _x = 0
+// DomEvent('.container','scroll',function(){
+//   if (element.scrollHeight - element.scrollTop === element.clientHeight)
+//       {
+//         if(_x < 1){
+//           firebase.database().ref('video').limitToFirst(7).on('child_added',function(snapshot){
+//             let ul = get('.item2');
+//             ul.innerHTML += `<div class="box" data-id="${snapshot.key}" onclick="clickvid(this)">
+//             <div class="video">
+//                 <video src="${snapshot.val().video} id="${snapshot.key}" onmouseover="hover(this);" onmouseout="hoverout($)" >
+//             </div>
+//            <div class="v-details">
+//                 <h2 id="v-details">${snapshot.val().title}</h2>
+//                 <h3 id="v-details">${snapshot.val().username}</h3>
+//             </div>
+//           </div>`
+//           })
+//           _x++;
+//         }
 
-      }
+//       }
 
-})
+// })
 //-----Get Video Data------------//
 function firebaseGetData(val){
   firebase.database().ref("video/"+val).once('value').then(function (snapshot) {
