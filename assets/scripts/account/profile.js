@@ -28,8 +28,8 @@ var thumb;
 var videoPicked;
 var videoTitle;
 var title , des , type , emp=false;
-var thumbnail_url  , video_url
-
+var thumbnail_url = null  , video_url , gif_url;
+var isGif = false;
 // Load Profile detail Once
 firebase.database().ref("users/"+uid).once('value').then(function (snapshot) {
     Username = snapshot.val().name;
@@ -307,8 +307,13 @@ input.addEventListener('change', function (e) {
         reader = new FileReader();
         reader.readAsArrayBuffer(files[0]);
         reader.onload = f => {
-    getVideoCover(files[0] , 1.5)
+          try{
             
+            // getVideoCover(files[0] , 1.5)
+      ExtractVideoGif(files[0])
+    }catch(err){
+   console.log(err)
+    }
            }
        }    
        input.click();
@@ -333,13 +338,17 @@ function dbUpload() {
    get('.Loading-Modal').style.display = "none"
   }
 }
+//firebase data add
 function DBUpload(url){
   // Get a key for a new Post.
+  console.log('Enter block')
   var t = getTimeinMilli();
+  try{
 var newPostKey = firebase.database().ref().child('video').push().key;
   firebase.database().ref("video/"+newPostKey).set({
     "video":video_url,
     "thumbnail": thumbnail_url,
+    "gif" : gif_url,
     "title": title,
     "videoSize": files[0].size,
     "VideoMillisec": videoMilliSec,
@@ -358,6 +367,7 @@ var newPostKey = firebase.database().ref().child('video').push().key;
   firebase.database().ref("Userposts/"+uid+"/"+newPostKey).set({
     "video":video_url,
     "thumbnail": thumbnail_url,
+    "gif" : gif_url,
     "title": title,
     "videoSize": files[0].size,
     "VideoMillisec": videoMilliSec,
@@ -376,7 +386,14 @@ var newPostKey = firebase.database().ref().child('video').push().key;
   get('.Loading-Modal').style.display = "none"
   get('.video-box').style.width = 'none';
   get('.UploadFile').style.width = 'block';
+}catch(err){
+  if(isGif){}else{
+    DBUpload()
+  }
+console.log('Firebase Upload Errror' + "\n"+err)
 }
+}
+//Fetching Thumbnail
 function getVideoCover(file, seekTo = 0.0) {
   console.log("getting video cover for file");
   get('.Loading-Modal').style.display = "grid"
@@ -420,6 +437,7 @@ function getVideoCover(file, seekTo = 0.0) {
       });
 
 }
+//uploading Thumbnail
 function uploadThumbnail(file){
   const id = 'AKfycbwVJszGTGgfWl5Pexu8YrG010DMcJQVaDmyYqivoedIvm83ZTmi1rAdmKbGD6h8r5bu1g'
   const url = `https://script.google.com/macros/s/${id}/exec`; 
@@ -442,7 +460,69 @@ body: JSON.stringify(file.substr(file.indexOf('base64,')+7))})
        return err;
   })
 }
+//Uploading Gif Thumbnail
+function uploadThumbnailGif(file){
+  const id = 'AKfycbwVJszGTGgfWl5Pexu8YrG010DMcJQVaDmyYqivoedIvm83ZTmi1rAdmKbGD6h8r5bu1g'
+  const url = `https://script.google.com/macros/s/${id}/exec`; 
+  console.log('uploading Thumbnail Gif')
+  const qs = new URLSearchParams({filename:`img${rand(100)+rand(789)}`, mimeType: 'image/gif'});
+  fetch(`${url}?${qs}`, {
+method: "POST",
+body: JSON.stringify(file.substr(file.indexOf('base64,')+7))})
+  .then(res => res.json())
+  .then(e => {
+    console.log('Gif Uploaded')
+    gif_url = ` https://drive.google.com/uc?export=download&id=${e.fileId}`
+    get('.Loading-Modal').style.display = "none"
+    return gif_url;
+  })
+  .catch(err =>{
+    get('.Loading-Modal').style.display = "none"
+       console.error("Gif Upload Err : \n"+err)
+       alert('Uploading Error \n ' + JSON.stringify(err))
+       return err;
+  })
+}
+//fetching Gif thumbnail
+function ExtractVideoGif(file){
+  get('.Loading-Modal').style.display = "grid"
+  const videoPlayer2 = document.createElement('video');
+  videoPlayer2.setAttribute('src', URL.createObjectURL(file));
+  videoPlayer2.load();
+  videoPlayer2.addEventListener('loadedmetadata', () => {
+    videoMilliSec    =  videoPlayer2.duration ;
+    video_Time = videoPlayer2.duration;
+  })
+  const v2g = new CoreVideoToGif({
+    // specify the video element
+    el: videoPlayer2,
+    // video 的父容器
+    parentEl: document.querySelector('.container'),
+    workerScript: '../assets/scripts/account/gif.worker.js',
+    // width: 310,
+    // height: 170,
+    onGifProcess: function () {
+        console.clear();
+      console.log('Processing')
+    },
+    onGifFinished: function () {
+      console.log('gif ready')
+      isGif = true
+    }
+})
+v2g.shot({
+    // options,
+    start: 2, // ms
+    end: 8
 
+}, (result) => {
+    // ...
+    get('.Loading-Modal').style.display = "none"
+    uploadThumbnailGif(result)
+    
+})
+
+}
 //---------Drive Upload Methods & api needs---------//
 var drive_accessToken;
 getAccessToken();
@@ -519,11 +599,12 @@ function uploadToDrive2($){
         }
         try{
             //Upload Success
-          
-          video_url = ` https://drive.google.com/uc?export=download&id=${res.result.id}`
+            console.log(res)
+            video_url = ` https://drive.google.com/uc?export=download&id=${res.result.id}`
             getFileShaingPermission(res.result.id)
             DBUpload(video_url)
             get('.Loading-Modal').style.display = "none"
+            console.log('db upload working')
             document.querySelector('.Loading-Modal h1').innerText = 'Initializing Please Wait ...'
             document.querySelector('.video-box').style.display = 'none'
             document.querySelector('#upload_container').style.display = 'block'

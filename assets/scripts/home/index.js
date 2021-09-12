@@ -50,7 +50,9 @@ getVideos();
 function videoElem(ul,key,vid,profile,title,name,time,view){
   const drive = "https://drive.google.com/thumbnail?id="
 const url = vid;
+console.log(url)
 const new_url = url.replace('https://drive.google.com/uc?export=download&id=',drive) 
+console.log(new_url)
   ul.innerHTML += `          <div class="video" data-id="${key}"  onclick="vidClicked(this)">
   <div class="video__thumbnail" data-id="${key}">
   <img src="${new_url}" class="video__thumbnail" alt="thumbnail couldn't Load  Quota Exceeded, check again in an hour">
@@ -80,30 +82,30 @@ function getVideos(){
   if(random >= 4 ){
     firebase.database().ref('video').limitToFirst(3).on('child_added',function(snapshot){
         var s = snapshot.val();
-        videoElem(ul,snapshot.key,s.thumbnail,s.profile,s.title,s.username,s.time,s.view)
+        videoElem(ul,snapshot.key,s.gif,s.profile,s.title,s.username,s.time,s.view)
     })
 }else{
     firebase.database().ref('video').limitToLast(3).on('child_added',function(snapshot){
         var s = snapshot.val();
-        videoElem(ul,snapshot.key,s.thumbnail,s.profile,s.title,s.username,s.time,s.view)
+        videoElem(ul,snapshot.key,s.gif,s.profile,s.title,s.username,s.time,s.view)
     })
 }
 // Latest video
 firebase.database().ref('video').limitToLast(3).on('child_added',function(snapshot){
 var s = snapshot.val();
-videoElem(ul2,snapshot.key,s.thumbnail,s.profile,s.title,s.username,s.time,s.view)
+videoElem(ul2,snapshot.key,s.gif,s.profile,s.title,s.username,s.time,s.view)
 })//TYpe Comedy Video
 firebase.database().ref('video').orderByChild('type').equalTo('comedy').limitToLast(6).on('child_added',function(snapshot){
 var s = snapshot.val();
-videoElem(ul3,snapshot.key,s.thumbnail,s.profile,s.title,s.username,s.time,s.view)
+videoElem(ul3,snapshot.key,s.gif,s.profile,s.title,s.username,s.time,s.view)
 })//TYpe Comedy love
 firebase.database().ref('video').orderByChild('type').equalTo('love').limitToLast(6).on('child_added',function(snapshot){
 var s = snapshot.val();
-videoElem(ul4,snapshot.key,s.thumbnail,s.profile,s.title,s.username,s.time,s.view);
+videoElem(ul4,snapshot.key,s.gif,s.profile,s.title,s.username,s.time,s.view);
 })//TYpe Comedy sad
 firebase.database().ref('video').orderByChild('type').equalTo('sad').limitToLast(6).on('child_added',function(snapshot){
 var s = snapshot.val();
-videoElem(ul5,snapshot.key,s.thumbnail,s.profile,s.title,s.username,s.time,s.view);
+videoElem(ul5,snapshot.key,s.gif,s.profile,s.title,s.username,s.time,s.view);
 })
 }
 //----------------user if loggined---------------------//
