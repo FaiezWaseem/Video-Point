@@ -168,7 +168,7 @@ function myVideos(){
       }
       const drive = "https://drive.google.com/thumbnail?id="
       const url = snapshot.val().thumbnail;
-      const new_url = url.replace('https://drive.google.com/uc?export=download&id=',drive) 
+      const new_url = drive + url;
         ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="videoClicked(this)">
         <div class="video__thumbnail" data-id="${snapshot.key}">
         <img src="${new_url}" class="video__thumbnail">
@@ -203,9 +203,10 @@ function watchLaterVideos() {
                    $profile  = mapProfile[d].profile;
               }
             }
+            const drive = "https://drive.google.com/thumbnail?id="
       ul.innerHTML += `          <div class="video" data-id="${snapshot.key}"  onclick="videoClicked(this)">
       <div class="video__thumbnail" data-id="${snapshot.key}">
-      <img src="${snapshot.val().thumbnail}" class="video__thumbnail">
+      <img src="${drive+snapshot.val().thumbnail}" class="video__thumbnail">
       </div>
       <div class="video__details">
         <div class="author">
@@ -601,6 +602,7 @@ function uploadToDrive2($){
             //Upload Success
             console.log(res)
             video_url = ` https://drive.google.com/uc?export=download&id=${res.result.id}`
+            thumbnail_url = res.result.id;
             getFileShaingPermission(res.result.id)
             DBUpload(video_url)
             get('.Loading-Modal').style.display = "none"
