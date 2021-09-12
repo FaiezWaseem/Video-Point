@@ -34,10 +34,10 @@ var thumbnail_url  , video_url
 firebase.database().ref("users/"+uid).once('value').then(function (snapshot) {
     Username = snapshot.val().name;
     avatar = snapshot.val().profile;
-c( get('#uname').textContent)
     get('#avatar').src = avatar;
     get('#tab_icon').href = avatar;
     get('#uname').textContent= Username;
+    get('#uname2').textContent= Username;
     get('#title').textContent= Username;
     get('#uemail').textContent= snapshot.val().email;
 
@@ -252,8 +252,21 @@ function  getusersDetail() {
 }
 
 getusersDetail();
-
-
+//-----------SignOut---------------------//
+function SignOut(){
+  auth.signOut();
+}
+auth.onAuthStateChanged(function(user){
+		
+  if(user){
+        c('Active User')
+            }else{
+    window.location.replace('../index.html')
+      console.log("No Active User");
+      //no user is signed in
+  }
+  
+});
 
 //---------------VIDEO UPLOAD------------------//
 

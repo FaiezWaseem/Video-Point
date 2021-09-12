@@ -5,106 +5,171 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="title">Username</title>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+    crossorigin="anonymous"
+  />
     <link id="tab_icon" rel="icon" href="../assets/images/profile.png">
     <link rel="stylesheet" href="../assets/css/userpanel.css">
 </head>
 <body>
-    <div class="sidenav">
-        <a  id="profile">Profile</a>
-        <a  id="vid">MyVideos</a>
-        <a id="uploadx">Upload</a>
-        <a id="watched">Watched</a>
-        <a id="help">Help</a>
+  <header id="header">
+    <i class="fas fa-bars" id="nav-toggler"></i>
+    <div>
+      <i class="fas fa-user-alt"></i>
+      <span id="uname2">John Doe</span>
+    </div>
+  </header>
+
+  <nav id="nav">
+    <div>
+      <div class="logo">
+        <i class="fab fa-gg-circle"></i>
+        <span>VideoPoint</span>
       </div>
-      
-<div class="main">
-<div class="profile flex">
-    <div class="container">
-        <div class="profilebox">
-        <img src="../profile.png" id="avatar" alt="image not found">
-        <h2 id="uname">UserName</h2>
-        <h4 id="uemail">Email@.gmail.com</h4>
-        
-<button class="edit" onclick="editClick();">Edit</button>
+      <ul class="nav">
+        <li class="nav__item">
+          <a href="#" class="nav__item-link active" id="profile">
+            <i class="fas fa-user-alt"></i>
+            <span>Profile</span>
+          </a>
+        </li>
+        <li class="nav__item">
+          <a href="#" class="nav__item-link" id="vid">
+            <i class="fas fa-video"></i>
+            <span>My Videos</span>
+          </a>
+        </li>
+        <li class="nav__item">
+          <a href="#" class="nav__item-link" id="uploadx">
+            <i class="fas fa-upload"></i>
+            <span>Upload</span>
+          </a>
+        </li>
+        <li class="nav__item">
+          <a href="#" class="nav__item-link" id="watched">
+            <i class="fas fa-photo-video"></i>
+            <span>Watch Later</span>
+          </a>
+        </li>
+        <li class="nav__item">
+          <a href="#" class="nav__item-link">
+            <i class="fas fa-home"></i>
+            <span>Options <i class="fas fa-angle-down"></i></span>
+          </a>
+          <ul class="d-none">
+            <li>
+              <a href="#" class="sub_link">Link 1</a>
+            </li>
+            <li>
+              <a href="#" class="sub_link">Link 2</a>
+            </li>
+            <li>
+              <a href="#" class="sub_link">Link 3</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
 
-
-</div>
-<a id="anker" onclick="GoTOHome();">Go Back To home</a>
-<div class="btn">
-    <button class="none"  id="select">Select</button>
-    <button class="none" id="upload">Upload</button>
-</div>
-
-<div id="myProgress" class="none">
-    <div id="myBar"></div>
-    <h4 id="per"></h4>
-  </div>
-</div>
-</div>
-<div class="videos" style="display: none;">
-        <h1>MyVideos</h1>
-        <div class="videos__container">
-
-        </div>
-
-     
-
-
-</div>
-<div class="UploadFile" style="display: none;">
-    <div class="container" id="upload_container">
-        <h3>Upload your File :</h3>
-        <div class="drag-area">
-          <div class="icon">
-            <i class="fas fa-images"></i>
-          </div>
-      
-         
-          <span class="header"><span class="button">browse</span></span>
-          <input type="file" hidden />
-          <span class="support">Supports: mp4</span>
-        </div>
-      </div>
-      <div class="video-box" style="display: none;">
+    <a href="#" class="sign-out" onclick="SignOut()">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Sign Out</span>
+    </a>
+  </nav>
+<main>
+  <div class="main">
+    <div class="profile flex">
+        <div class="container">
+            <div class="profilebox">
+            <img src="../profile.png" id="avatar" alt="image not found">
+            <h2 id="uname">UserName</h2>
+            <h4 id="uemail">Email@.gmail.com</h4>
+            
+    <button class="edit" onclick="editClick();">Edit</button>
     
-        <div class="box-shadow">
-            <input type="text"  id="vidtitle" placeholder="Enter Video Title" required>
-            <textarea  cols="30" rows="10" id="des" placeholder="Enter Video Description" required></textarea>
-          
-            <label for="type">Choose Video type :</label>
-                <select id="type" name="cars">
-                  <option value="comedy">Comedy</option>
-                  <option value="news">News</option>
-                  <option value="action">Action</option>
-                  <option value="sad">Sad</option>
-                  <option value="music">Music</option>
-                  <option value="movie">Movie</option>
-                  <option value="love">love</option>
-                  <option value="gaming">gaming</option>
-                </select>
-                <button onclick="uploadVideo()"id="Upload_btn">Upload</button>
-                </div>
+    
+    </div>
+    <a id="anker" onclick="GoTOHome();">Go Back To home</a>
+    <div class="btn">
+        <button class="none"  id="select">Select</button>
+        <button class="none" id="upload">Upload</button>
+    </div>
+    
+    <div id="myProgress" class="none">
+        <div id="myBar"></div>
+        <h4 id="per"></h4>
+      </div>
+    </div>
+    </div>
+    <div class="videos" style="display: none;">
+            <h1>MyVideos</h1>
+            <div class="videos__container">
+    
+            </div>
+    
+         
+    
+    
+    </div>
+    <div class="UploadFile" style="display: none;">
+        <div class="container" id="upload_container">
+            <h3>Upload your File :</h3>
+            <div class="drag-area">
+              <div class="icon">
+                <i class="fas fa-images"></i>
               </div>
+          
+             
+              <span class="header"><span class="button">browse</span></span>
+              <input type="file" hidden />
+              <span class="support">Supports: mp4</span>
+            </div>
+          </div>
+          <div class="video-box" style="display: none;">
+        
+            <div class="box-shadow">
+                <input type="text"  id="vidtitle" placeholder="Enter Video Title" required>
+                <textarea  cols="30" rows="10" id="des" placeholder="Enter Video Description" required></textarea>
+              
+                <label for="type">Choose Video type :</label>
+                    <select id="type" name="cars">
+                      <option value="comedy">Comedy</option>
+                      <option value="news">News</option>
+                      <option value="action">Action</option>
+                      <option value="sad">Sad</option>
+                      <option value="music">Music</option>
+                      <option value="movie">Movie</option>
+                      <option value="love">love</option>
+                      <option value="gaming">gaming</option>
+                    </select>
+                    <button onclick="uploadVideo()"id="Upload_btn">Upload</button>
+                    </div>
+                  </div>
+        </div>
+          
+    <div class="watchlater videos" id="watchlater" style="display: none;">
+      <div class="videos">
+        <h1>Watch Later</h1>
+        <div class="videos_Watch_Later">
+    
+        </div>
+    
     </div>
+    </div>
+    <div class="Loading-Modal">
+      <div>
+        <img src="../assets/images/71814-loading-dots.gif" alt="Loading">
+        <h1>Initializing Please Wait ...</h1>
+        <span>Please Do not Close The Window While Uploading... </span>
+    
+      </div>
+    </div>
+    </div>
+</main>
       
-<div class="watchlater videos" id="watchlater" style="display: none;">
-  <div class="videos">
-    <h1>Watch Later</h1>
-    <div class="videos_Watch_Later">
-
-    </div>
-
-</div>
-</div>
-<div class="Loading-Modal">
-  <div>
-    <img src="../assets/images/71814-loading-dots.gif" alt="Loading">
-    <h1>Initializing Please Wait ...</h1>
-    <span>Please Do not Close The Window While Uploading... </span>
-
-  </div>
-</div>
-
 <!-- Scripts -->
 <!-- Firebase Important  -->
 <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
@@ -117,6 +182,7 @@
 <script src="https://apis.google.com/js/api.js"></script>
 <script src="../assets/lib/resumableupload.js"></script>
 <!-- Main Files -->
+<script src="../assets/scripts/account/sidebar.js"></script>
 <script src="../assets/scripts/account/profile.js"></script>
 </body>
 </html>
