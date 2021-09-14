@@ -393,7 +393,10 @@ function CheckUnLiked(){
 function firebaseGetData(val){
   firebase.database().ref("video/"+val).once('value').then(function (snapshot) {
     var url = snapshot.val().video;
-  get('#video-element').src = url;
+    var id_here = url.replace('https://drive.google.com/uc?export=download&id=',"")
+    id_here = id_here.replace(/\s/g, '')
+    const video_link = `https://www.googleapis.com/drive/v3/files/${id_here}?alt=media&key=AIzaSyCNRerZNkFQS4NMgupkvqpuvq-wdTQWm9E`
+  get('#video-element').src = video_link;
   get("#vid_title").textContent = snapshot.val().title;
   get("#title").textContent = snapshot.val().title;
   get("#like_count").textContent = snapshot.val().likes;

@@ -295,9 +295,10 @@ button.onclick = () => {
 
 // when browse
 input.addEventListener('change', function (e) {
-  dropArea.classList.add('active');   
+  // dropArea.classList.add('active');   
     var video = get('#video');
-  let validExtensions = ['video/mp4'];
+    console.log(e.target.files[0].type)
+  let validExtensions = ['video/mp4' , 'video/x-matroska'];
 // if file is  a mp4 video  
        if (validExtensions.includes(e.target.files[0].type)) {
            fr = e;
@@ -490,6 +491,7 @@ function ExtractVideoGif(file){
   const videoPlayer2 = document.createElement('video');
   videoPlayer2.setAttribute('src', URL.createObjectURL(file));
   videoPlayer2.load();
+  videoPlayer2.muted = true
   videoPlayer2.addEventListener('loadedmetadata', () => {
     videoMilliSec    =  videoPlayer2.duration ;
     video_Time = videoPlayer2.duration;
