@@ -264,6 +264,9 @@ function pause_vid()
     copytext(url2);
   }
 
+  get('#embed').onclick = () =>{
+    copytext('https://faiezwaseem.github.io/Video-Point/embed/?page='+key);
+  }
 //------------------DATABASE WORKING STARTED---------------------------------------------//
 
 firebaseGetData(key);
