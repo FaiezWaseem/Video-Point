@@ -265,7 +265,8 @@ function pause_vid()
   }
 
   get('#embed').onclick = () =>{
-    copytext('https://faiezwaseem.github.io/Video-Point/embed/?page='+key);
+    copytext(`<iframe src="https://faiezwaseem.github.io/Video-Point/embed/?page=${key}" title="VideoPoint" width="580px" height="340px" frameborder="0"></iframe>`);
+  alert('Copied')
   }
 //------------------DATABASE WORKING STARTED---------------------------------------------//
 
