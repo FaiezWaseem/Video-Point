@@ -128,8 +128,11 @@ function convertTime(time){
   //  convertTime(time);
     return output;
 }
-function viewCount(time , view , key){
-    firebase.database().ref("video/"+key).update({
+function viewCount(type , view , key){
+    firebase.database().ref("video/all/"+key).update({
+      "view":++view
+    })
+    firebase.database().ref(`video/${type}/`+key).update({
       "view":++view
     })
     firebase.database().ref("views/"+key).set({
