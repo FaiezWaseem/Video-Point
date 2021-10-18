@@ -121,7 +121,7 @@ function getVideos(){
   var x5 = 0;
   // recomended videos
   if(random >= 4 ){
-    firebase.database().ref('video').limitToFirst(6).on('child_added',function(snapshot){
+    firebase.database().ref('video/all/').limitToFirst(6).on('child_added',function(snapshot){
         var s = snapshot.val();
         if( x == 0){
           x++;
@@ -130,7 +130,7 @@ function getVideos(){
         videoElemSlide(ul,snapshot.key,s.thumbnail,s.gif,s.profile,s.title,s.username,s.time,s.view)
     })
 }else{
-    firebase.database().ref('video').limitToLast(6).on('child_added',function(snapshot){
+    firebase.database().ref('video/all/').limitToLast(6).on('child_added',function(snapshot){
         var s = snapshot.val();
         if( x == 0){
           x++;
@@ -140,7 +140,7 @@ function getVideos(){
     })
 }
 // Latest video
-firebase.database().ref('video').limitToLast(3).on('child_added',function(snapshot){
+firebase.database().ref('video/all/').limitToLast(3).on('child_added',function(snapshot){
 var s = snapshot.val();
 if( x2 == 0){
   x2++;
@@ -148,7 +148,7 @@ if( x2 == 0){
 }
 videoElem(ul2,snapshot.key,s.thumbnail,s.gif,s.profile,s.title,s.username,s.time,s.view)
 })//TYpe Comedy Video
-firebase.database().ref('video').orderByChild('type').equalTo('comedy').limitToLast(6).on('child_added',function(snapshot){
+firebase.database().ref('video/comedy/').orderByChild('type').equalTo('comedy').limitToLast(6).on('child_added',function(snapshot){
 var s = snapshot.val();
 if( x3 == 0){
   x3++;
@@ -156,7 +156,7 @@ if( x3 == 0){
 }
 videoElem(ul3,snapshot.key,s.thumbnail,s.gif,s.profile,s.title,s.username,s.time,s.view)
 })//TYpe Comedy love
-firebase.database().ref('video').orderByChild('type').equalTo('love').limitToLast(6).on('child_added',function(snapshot){
+firebase.database().ref('video/love/').orderByChild('type').equalTo('love').limitToLast(6).on('child_added',function(snapshot){
 var s = snapshot.val();
 if( x4 == 0){
   x4++;
@@ -164,7 +164,7 @@ if( x4 == 0){
 }
 videoElem(ul4,snapshot.key,s.thumbnail,s.gif,s.profile,s.title,s.username,s.time,s.view);
 })//TYpe Comedy sad
-firebase.database().ref('video').orderByChild('type').equalTo('sad').limitToLast(6).on('child_added',function(snapshot){
+firebase.database().ref('video/sad/').orderByChild('type').equalTo('sad').limitToLast(6).on('child_added',function(snapshot){
 var s = snapshot.val();
 if( x5 == 0){
   x5++;
@@ -282,7 +282,7 @@ function trend(views) {
   for(let i = 0 ; i <= 6; i++){
     c(i);
     let pkey = views[i].key;
-    firebase.database().ref('video/'+pkey).once('value').then(function (snapshot){
+    firebase.database().ref('video/all/'+pkey).once('value').then(function (snapshot){
       var s = snapshot.val();
       videoElem(ul,snapshot.key,s.thumbnail,s.profile,s.title,s.username,s.time,s.view)
            })
@@ -326,7 +326,7 @@ DomEvent('#logout','click',function()
   }
 })
 //searching video
-firebase.database().ref('video').on('child_added',function(snapshot){
+firebase.database().ref('video/all/').on('child_added',function(snapshot){
 var datalist = get('#searchs');
 datalist.innerHTML += `
 <option value='${snapshot.val().title}' video-type='${snapshot.val().type}' data-id='${snapshot.key}'>

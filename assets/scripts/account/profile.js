@@ -347,44 +347,27 @@ function DBUpload(url){
   var t = getTimeinMilli();
   try{
 var newPostKey = firebase.database().ref().child('video').push().key;
-  firebase.database().ref("video/"+newPostKey).set({
-    "video":video_url,
-    "thumbnail": thumbnail_url,
-    "gif" : gif_url,
-    "title": title,
-    "videoSize": files[0].size,
-    "VideoMillisec": videoMilliSec,
-    "duration":video_Time,
-    "view": "0",
-    "type": type,
-    "des": des,
-     "likes":"0",
-     "uid": uid,
-     "time":t,
-     "key":newPostKey,
-     "username":Username,
-     "profile":avatar
-
-  })
-  firebase.database().ref("Userposts/"+uid+"/"+newPostKey).set({
-    "video":video_url,
-    "thumbnail": thumbnail_url,
-    "gif" : gif_url,
-    "title": title,
-    "videoSize": files[0].size,
-    "VideoMillisec": videoMilliSec,
-    "duration":video_Time,
-    "view": "0",
-    "type": type,
-    "des": des,
-     "likes":"0",
-     "uid": uid,
-     "time":t,
-     "key":newPostKey,
-     "username":Username,
-     "profile":avatar
-
-  })
+const obj = {
+  "video":video_url,
+  "thumbnail": thumbnail_url,
+  "gif" : gif_url,
+  "title": title,
+  "videoSize": files[0].size,
+  "VideoMillisec": videoMilliSec,
+  "duration":video_Time,
+  "view": "0",
+  "type": type,
+  "des": des,
+   "likes":"0",
+   "uid": uid,
+   "time":t,
+   "key":newPostKey,
+   "username":Username,
+   "profile":avatar
+}
+  firebase.database().ref("video/all/"+newPostKey).set(obj)
+  firebase.database().ref("video/"+type+"/"+newPostKey).set(obj)
+  firebase.database().ref("Userposts/"+uid+"/"+newPostKey).set(obj)
   get('.Loading-Modal').style.display = "none"
   get('.video-box').style.width = 'none';
   get('.UploadFile').style.width = 'block';
