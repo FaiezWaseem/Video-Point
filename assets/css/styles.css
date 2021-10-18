@@ -189,6 +189,7 @@ h1 {
 @media (max-width: 425px) {
   .header__search {
     display: none;
+    font-size: 1.1rem !important;
   }
 
   .header__icons .material-icons {
@@ -201,6 +202,12 @@ h1 {
 
   .sidebar {
     display: none;
+  }
+  .next , .prev{
+  padding: 10px 20px;
+  }
+  .fa-2x{
+    font-size: 1.1rem !important;
   }
 
 }
@@ -235,3 +242,26 @@ h1 {
   }
 }
 
+@keyframes fade-in {
+  0%   {background-color:gery;opacity: 0.2;}
+  25%  {background-color:grey;opacity: 0.4;}
+  50%  {background-color:grey;opacity: 0.6;}
+  75%  {background-color:grey;opacity: 0.8;}
+  100% {background-color:grey; opacity: 1;}
+}
+.loading{
+  animation-name: fade-in;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+.next , .prev{
+  padding: 10px 15px;
+  border-radius: 50%;
+  background: rgba( 255, 255, 255 , 1);
+  -webkit-box-shadow:  0px  0px 9.5px -4px rgba(0,0,0, 0.5);
+  box-shadow: 0px  0px 9.5px -4px rgba(0,0,0, 0.5);
+
+}
+.fa-2x{
+  font-size: 1.3rem !important;
+}
