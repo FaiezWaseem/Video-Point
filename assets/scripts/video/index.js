@@ -169,8 +169,8 @@ function pause_vid()
  get('#video_time').innerText = time2.minutes+"m : "+time2.seconds+"s"  +"/"+time.minutes+"m : "+time.seconds+"s";
  if($_x <= 0){
   if(player.currentTime >= player.duration/2){
-    firebase.database().ref("video/"+key).once('value').then(function (snapshot) {
-    viewCount(type,player.duration,  snapshot.val().view, snapshot.val().key)
+    firebase.database().ref("video/all/"+key).once('value').then(function (snapshot) {
+    viewCount(type,snapshot.val().view, snapshot.val().key)
     });
     $_x++;
   }
@@ -280,7 +280,7 @@ firebase.database().ref('video/all/').limitToLast(7).on('child_added',function(s
   new_url = new_url.replace('https://drive.google.com/uc?export=download&id=',drive) 
   ul.innerHTML += `             <div class="box" data-id="${snapshot.key}" onclick="clickvid(this)">
   <div class="video">
-      <video src="" poster="${url}" id="${snapshot.key}" preview="${new_url}" onmouseover="vidMouseOver(this);" onmouseout="hoverout(this)">
+      <video src="" poster="${url}" id="${snapshot.key}" preview="${new_url}" onmouseover="vidMouseOver(this);" onmouseout="vidMouseOut(this)">
   </div>
  <div class="v-details">
       <h2 id="v-details">${snapshot.val().title}</h2>

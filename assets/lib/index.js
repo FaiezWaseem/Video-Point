@@ -129,6 +129,7 @@ function convertTime(time){
     return output;
 }
 function viewCount(type , view , key){
+  console.log(type , view ,key)
     firebase.database().ref("video/all/"+key).update({
       "view":++view
     })

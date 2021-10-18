@@ -5,6 +5,7 @@ var random = rand(6);
 var  $profile;
 var  mapName = [];
 var  mapProfile = [];
+console.group();
 function  getusersDetail() {
   firebase.database().ref('users').on('child_added',function(snapshot){
     var username = snapshot.val().name        
@@ -284,7 +285,7 @@ function trend(views) {
     let pkey = views[i].key;
     firebase.database().ref('video/all/'+pkey).once('value').then(function (snapshot){
       var s = snapshot.val();
-      videoElem(ul,snapshot.key,s.thumbnail,s.profile,s.title,s.username,s.time,s.view)
+      videoElem(ul,snapshot.key,s.thumbnail,s.gif,s.profile,s.title,s.username,s.time,s.view)
            })
                                               }
 }
