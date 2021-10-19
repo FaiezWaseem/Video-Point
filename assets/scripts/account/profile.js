@@ -197,7 +197,7 @@ function watchLaterVideos() {
   firebase.database().ref('watchLater/'+uid+"/").on('child_added',function(snapshot){
 
           var pkey = snapshot.val().vid_key;
-          firebase.database().ref('video/'+pkey).once('value').then(function (snapshot){
+          firebase.database().ref('video/all/'+pkey).once('value').then(function (snapshot){
             for(let d = 0 ; d<= mapProfile.length-1; d++){
               if(mapProfile[d].uid === snapshot.val().uid){
                    $profile  = mapProfile[d].profile;
