@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload | Video Point</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <form id="form">
+        <div class="drag-area">
+            <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+            <header id="progress">CLick to Upload File</header>
+            <button>Browse File</button>
+                <input name="file" id="uploadfile" type="file" hidden/>
+        </div>
+    </form>
+    <div class="video-box" style="display: none;">
+        
+        <div class="box-shadow">
+            <input type="text"  id="vidtitle" placeholder="Enter Video Title" required>
+            <textarea  cols="30" rows="10" id="des" placeholder="Enter Video Description" required></textarea>
+          
+            <label for="type">Choose Video type :</label>
+                <select id="type" name="cars">
+                  <option value="comedy">Comedy</option>
+                  <option value="news">News</option>
+                  <option value="action">Action</option>
+                  <option value="sad">Sad</option>
+                  <option value="music">Music</option>
+                  <option value="movie">Movie</option>
+                  <option value="love">love</option>
+                  <option value="gaming">gaming</option>
+                </select>
+                <button onclick="uploadVideo()"id="Upload_btn">Upload</button>
+                </div>
+              </div> 
+              <div class="Loading-Modal">
+                <div>
+                  <img src="../assets/images/71814-loading-dots.gif" alt="Loading">
+                  <h3>Initializing Please Wait ...</h3>
+                  <span>Please Do not Close The Window While Uploading... </span>
+              
+                </div>
+              </div>         
+<script src="../assets/scripts/account/core-video-to-gif.js"></script>
+<script src="../assets/scripts/account/gif.worker.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/tanaikech/ResumableUploadForGoogleDrive_js@master/resumableupload_js.min.js"></script>
+  <script src="./main.js"></script>
+
+</body>
+</html>

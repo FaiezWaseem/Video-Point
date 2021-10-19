@@ -586,7 +586,7 @@ function uploadToDrive2($){
         try{
             //Upload Success
             console.log(res)
-            video_url = ` https://drive.google.com/uc?export=download&id=${res.result.id}`
+            video_url = `https://drive.google.com/uc?export=download&id=${res.result.id}`
             thumbnail_url = res.result.id;
             getFileShaingPermission(res.result.id)
             DBUpload(video_url)
