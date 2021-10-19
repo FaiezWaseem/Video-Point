@@ -212,7 +212,8 @@ function uploadThumbnailGif(file){
                 videoUrl : video_url,
                 fileSize : files[0].size,
                 time : t,
-                duration : vid_duration
+                duration : vid_duration,
+                thumb : thumbnail_url
              }
              console.clear()
              setTimeout(function () {
