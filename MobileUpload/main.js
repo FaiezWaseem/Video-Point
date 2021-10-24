@@ -266,8 +266,8 @@ document.querySelector('.Loading-Modal h3').innerText = 'Uploading Gif preview P
 }
 function uploadVideo(){
     inputVal()
-    if(emp){
-        if(gif_url != null){
+    if(emp){p
+        if(true){
             uploadToDrive2(files[0])
         }else{
             alert('Please Click Upload Again in a sec');
