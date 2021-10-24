@@ -266,7 +266,7 @@ document.querySelector('.Loading-Modal h3').innerText = 'Uploading Gif preview P
 }
 function uploadVideo(){
     inputVal()
-    if(emp){p
+    if(emp){
         if(true){
             uploadToDrive2(files[0])
         }else{
