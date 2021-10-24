@@ -79,7 +79,7 @@ input.addEventListener('change', function (e) {
           reader.readAsArrayBuffer(files[0]);
           reader.onload = f => {
             try{
-        ExtractVideoGif(files[0])
+       // ExtractVideoGif(files[0])
       }catch(err){
      console.log(err)
       }
@@ -212,7 +212,7 @@ document.querySelector('.Loading-Modal h3').innerText = 'Uploading Gif preview P
               const detail = {title : title,
                 des : des ,
                 type : type,
-                gifUrl : gif_url,
+                gifUrl : video_url,
                 videoUrl : video_url,
                 fileSize : files[0].size,
                 time : t,
