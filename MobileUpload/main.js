@@ -3,7 +3,7 @@ button = dropArea.querySelector("button"),
 input = dropArea.querySelector("input"),
 LoadingModal = document.querySelector('.Loading-Modal'),
 videoBox = document.querySelector('.video-box');
-var gif_url=null , files ,title , des , type , emp=false , vid_duration;
+var gif_url='' , files ,title , des , type , emp=false , vid_duration;
 
 
 
