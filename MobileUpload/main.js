@@ -102,6 +102,7 @@ function uploadThumbnailGif(file){
     .then(res => res.json())
     .then(e => {
       console.log('Gif Uploaded')
+document.querySelector('.Loading-Modal h3').innerText = 'Video Gif preview uploaded successfully...'
       gif_url = `https://drive.google.com/uc?export=download&id=${e.fileId}`
       LoadingModal.style.display = "none"
       console.log(gif_url)
@@ -135,10 +136,12 @@ function uploadThumbnailGif(file){
       // height: 170,
       onGifProcess: function () {
           console.clear();
+document.querySelector('.Loading-Modal h3').innerText = 'Processing Gif preview Please Wait ...'
         console.log('Processing')
       },
       onGifFinished: function () {
         console.log('gif ready')
+document.querySelector('.Loading-Modal h3').innerText = 'Gif preview Created Please Wait ...'
         isGif = true
       }
   })
@@ -150,6 +153,7 @@ function uploadThumbnailGif(file){
   }, (result) => {
       // ...
       LoadingModal.style.display = "none"
+document.querySelector('.Loading-Modal h3').innerText = 'Uploading Gif preview Please Wait ...'
       uploadThumbnailGif(result)
       
   })
