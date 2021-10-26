@@ -79,13 +79,9 @@ input.addEventListener('change', function (e) {
           reader.readAsArrayBuffer(files[0]);
           reader.onload = f => {
             try{
-<<<<<<< HEAD
               // console.log(files[0])
               videoDuration(files[0])
         // ExtractVideoGif(files[0])
-=======
-       // ExtractVideoGif(files[0])
->>>>>>> b97ee888ef4e1b81cabcddc60e693989aabc1a18
       }catch(err){
      console.log(err)
       }
@@ -273,10 +269,6 @@ document.querySelector('.Loading-Modal h3').innerText = 'Uploading Gif preview P
 function uploadVideo(){
     inputVal()
     if(emp){
-<<<<<<< HEAD
-=======
-        if(true){
->>>>>>> b97ee888ef4e1b81cabcddc60e693989aabc1a18
             uploadToDrive2(files[0])
     }else{
         alert('Please Fill up the All fields')
