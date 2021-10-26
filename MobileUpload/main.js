@@ -3,7 +3,7 @@ button = dropArea.querySelector("button"),
 input = dropArea.querySelector("input"),
 LoadingModal = document.querySelector('.Loading-Modal'),
 videoBox = document.querySelector('.video-box');
-var gif_url=null , files ,title , des , type , emp=false , vid_duration;
+var gif_url='' , files ,title , des , type , emp=false , vid_duration;
 
 
 
@@ -79,9 +79,13 @@ input.addEventListener('change', function (e) {
           reader.readAsArrayBuffer(files[0]);
           reader.onload = f => {
             try{
+<<<<<<< HEAD
               // console.log(files[0])
               videoDuration(files[0])
         // ExtractVideoGif(files[0])
+=======
+       // ExtractVideoGif(files[0])
+>>>>>>> b97ee888ef4e1b81cabcddc60e693989aabc1a18
       }catch(err){
      console.log(err)
       }
@@ -104,6 +108,7 @@ function uploadThumbnailGif(file){
     .then(res => res.json())
     .then(e => {
       console.log('Gif Uploaded')
+document.querySelector('.Loading-Modal h3').innerText = 'Video Gif preview uploaded successfully...'
       gif_url = `https://drive.google.com/uc?export=download&id=${e.fileId}`
       LoadingModal.style.display = "none"
       console.log(gif_url)
@@ -137,10 +142,12 @@ function uploadThumbnailGif(file){
       // height: 170,
       onGifProcess: function () {
           console.clear();
+document.querySelector('.Loading-Modal h3').innerText = 'Processing Gif preview Please Wait ...'
         console.log('Processing')
       },
       onGifFinished: function () {
         console.log('gif ready')
+document.querySelector('.Loading-Modal h3').innerText = 'Gif preview Created Please Wait ...'
         isGif = true
       }
   })
@@ -152,6 +159,7 @@ function uploadThumbnailGif(file){
   }, (result) => {
       // ...
       LoadingModal.style.display = "none"
+document.querySelector('.Loading-Modal h3').innerText = 'Uploading Gif preview Please Wait ...'
       uploadThumbnailGif(result)
       
   })
@@ -265,6 +273,10 @@ function uploadThumbnailGif(file){
 function uploadVideo(){
     inputVal()
     if(emp){
+<<<<<<< HEAD
+=======
+        if(true){
+>>>>>>> b97ee888ef4e1b81cabcddc60e693989aabc1a18
             uploadToDrive2(files[0])
     }else{
         alert('Please Fill up the All fields')
