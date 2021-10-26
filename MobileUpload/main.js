@@ -79,7 +79,9 @@ input.addEventListener('change', function (e) {
           reader.readAsArrayBuffer(files[0]);
           reader.onload = f => {
             try{
-        ExtractVideoGif(files[0])
+              // console.log(files[0])
+              videoDuration(files[0])
+        // ExtractVideoGif(files[0])
       }catch(err){
      console.log(err)
       }
@@ -208,7 +210,7 @@ function uploadThumbnailGif(file){
               const detail = {title : title,
                 des : des ,
                 type : type,
-                gifUrl : gif_url,
+                gifUrl : video_url,
                 videoUrl : video_url,
                 fileSize : files[0].size,
                 time : t,
@@ -263,12 +265,18 @@ function uploadThumbnailGif(file){
 function uploadVideo(){
     inputVal()
     if(emp){
-        if(gif_url != null){
             uploadToDrive2(files[0])
-        }else{
-            alert('Please Click Upload Again in a sec');
-        }
     }else{
         alert('Please Fill up the All fields')
     }
   }
+function videoDuration(file){
+  const videoPlayer2 = document.createElement('video');
+  videoPlayer2.setAttribute('src', URL.createObjectURL(file));
+  videoPlayer2.load();
+  videoPlayer2.muted = true
+  videoPlayer2.addEventListener('loadedmetadata', () => {
+      vid_duration    =  videoPlayer2.duration ;
+      vid_duration = videoPlayer2.duration;
+  })
+}  
