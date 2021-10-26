@@ -3,6 +3,9 @@ var fir = firebase.database();
 var view_count = 0;
 var user_count = 0;
 var total_reports = 0;
+var total_uploads = 0;
+get('#report').textContent = total_reports;
+get('#upload').textContent = total_uploads;
 /* ===== Enable Bootstrap Popover (on element  ====== */
 
 var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="popover"]'))
@@ -104,20 +107,28 @@ function totalView() {
 	})
 
 }
-totalView();
 function totalUser() {
 	fir.ref('users').on('child_added',function(snapshot){
              user_count++;
 			 get('#total_users').textContent = user_count;
 	})
 }
-totalUser()
+
 function totalreport(){
 	fir.ref('reports').on('child_added',function(snapshot){
 		total_reports++;
 		get('#report').textContent = total_reports;
 })
 }
+function totalvideos(){
+	fir.ref('video/all/').on('child_added',function(snapshot){
+		total_uploads++;
+		get('#upload').textContent = total_uploads;
+})
+}
+totalView();
+totalUser();
+totalvideos();
 totalreport();
 
 
