@@ -40,6 +40,24 @@ firebase.database().ref("users/"+uid).once('value').then(function (snapshot) {
     get('#uname2').textContent= Username;
     get('#title').textContent= Username;
     get('#uemail').textContent= snapshot.val().email;
+    firebase.database().ref('video/all/').on('child_added', function(snapshot){
+     
+    if(snapshot.val().uid === uid){
+      firebase.database().ref('video/all/'+snapshot.val().key).update({
+            
+           "profile" : avatar
+    
+       });
+    
+      firebase.database().ref('video/'+snapshot.val().type+"/"+snapshot.val().key).update({
+            
+           "profile" : avatar
+    
+       });
+      }
+    
+    })
+
 
   })
   function GoTOHome(){
@@ -93,7 +111,7 @@ upload.onclick = function (){
    img = "avatar";
  
    //firebase cloud storage
-   var uploadTask = firebase.storage().ref('Profile/'+img+rand+'.png').put(files[0]);
+   var uploadTask = firebase.storage().ref('Profile/'+img+rand(99999)+'.png').put(files[0]);
 
    uploadTask.on('state_changed', function(snapshot){
         var progress = (snapshot.bytesTransferred/snapshot.totalBytes)*100;

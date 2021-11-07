@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+.material-icons {
+    color: rgb(96, 96, 96);
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    padding: 15px;
+   border-bottom: 1px solid #eee;
+  }
+  
+  .header__left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header__left img {
+    width: 100px;
+    margin-left: 0.5rem; /* Changed */
+  }
+  
+  .header i {
+    padding: 0 7px;
+    cursor: pointer;
+  }
+  
+  .header__search .ff {
+    border: 1px solid #ddd;
+    height: 35px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .header__search input {
+    width: 500px;
+    padding: 10px;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    height: 100%;
+  }
+  
+  .header__search button {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    border: none;
+    border-radius: 0;
+  }
+  /* Header end */
+
+
+  .Recomendation_Container{
+      overflow-x: hidden;
+      overflow-y: scroll;
+  }
+
+
+ .box{
+    display: flex;
+    align-items: center;
+    margin: 20px;
+    border-bottom: 1px solid #ddd;
+    }
+  .box video{
+        width: 250px;
+        height: 150px;
+    }
+.box .v-details{
+        margin-left: 20px;
+        line-height: 1cm;
+    }
+.box:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+
+  @media (max-width: 425px) {
+    .header__search {
+      display: none;
+      font-size: 1.1rem !important;
+    }
+  
+    .header__icons .material-icons {
+      display: none;
+    }
+  
+    .header__icons .display-this {
+      display: inline;
+    }
+  
+    .sidebar {
+      display: none;
+    }
+    .next , .prev{
+    padding: 10px 20px;
+    }
+    .fa-2x{
+      font-size: 1.1rem !important;
+    }
+    .box{
+        margin: 5px;
+    }
+    .box video{
+        width: 150px;
+        height: 80px;
+    }
+    .box .v-details{
+        margin-left: 15px;
+        line-height: 0.8cm;
+    }
+    .box .v-details h2{
+        font-size: 0.8rem;
+    }
+    .box .v-details h3{
+        font-size: 0.6rem;
+    }
+    
+  
+  }
+  
+  @media (max-width: 768px) {
+    h1{
+     margin-bottom: 0px; 
+     font-size:  1.3rem;
+    }
+    .header__search {
+   width: 300px;
+    }
+  
+    .sidebar {
+      display: none;
+    }
+  
+    .show-sidebar {
+      display: inline;
+      position: fixed;
+      top: 4.4rem;
+      height: auto;
+      z-index: 1;
+    }
+  }
+  
+  @media (max-width: 941px) {
+    .header__search input {
+      width: 300px;
+    }
+  }
+  

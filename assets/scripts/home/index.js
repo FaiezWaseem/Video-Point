@@ -228,8 +228,8 @@ DomEvent('#srch','click',function(){
   var low = search.toLowerCase();
   var ul = get('.videos__container');
   ul.innerHTML = "";
-  firebase.database().ref('video').orderByChild('title').startAt(Cap).endAt(low+'\uf8ff').on('child_added',function(snapshot){
-    ul.innerHTML += `          <div class="video" data-id="${snapshot.key}" onclick="vidClicked(this)">
+  firebase.database().ref('video/all/').orderByChild('title').startAt(Cap).endAt(low+'\uf8ff').on('child_added',function(snapshot){
+    ul.innerHTML += `   <div class="video" data-id="${snapshot.key}" onclick="vidClicked(this)">
       <div class="video__thumbnail" data-id="${snapshot.key}">
       <video src="${snapshot.val().video}" class="video__thumbnail">
       </div>
