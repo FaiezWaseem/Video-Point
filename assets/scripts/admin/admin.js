@@ -31,7 +31,7 @@ function UserReport(){
     firebase.database().ref('reports').on('child_added',function (snapshot) {
         var keey = snapshot.val().id;
         var reason = snapshot.val().reason
-        firebase.database().ref("video/"+keey).once('value').then(function (snapshot) {
+        firebase.database().ref("video/all/"+keey).once('value').then(function (snapshot) {
             var ul = get('#Users_report');
             let row = ul.insertRow(0);
             let cell1 = row.insertCell(0);
