@@ -410,9 +410,9 @@ function firebaseGetData(val){
     var url = snapshot.val().video;
     var id_here = url.replace('https://drive.google.com/uc?export=download&id=',"")
     id_here = id_here.replace(/\s/g, '')
-    const video_link = `https://www.googleapis.com/drive/v3/files/${id_here}?alt=media&key=AIzaSyCNRerZNkFQS4NMgupkvqpuvq-wdTQWm9E`
-  // get('#video-element').src = video_link;
-  getBlob(video_link)
+    const video_link = `https://www.googleapis.com/drive/v3/files/${id_here}?alt=media&key=AIzaSyDe-oqQlm9rgYXGdXoPYiO2FkpbrcnoRkA`
+  get('#video-element').src = video_link;
+  // getBlob(video_link)
   get("#vid_title").textContent = snapshot.val().title;
   get("#title").textContent = snapshot.val().title;
   get("#like_count").textContent = snapshot.val().likes;
